@@ -11,16 +11,42 @@
     
     <h1>Mister Meme</h1>
 
-    <div class="meme-container">
-        <canvas id="meme-canvas" width="500" height="500">
-            Please don't use IE 3
-        </canvas>
-    </div>
-    <div class="controls">
-        <label for="lineText">Text:</label>
-        <input type="text" name="lineText" id="lineText" oninput="onTextChange(this.value)">
-    </div>
+    <main class="meme-edit">
+        <div class="meme-image">
+            <canvas id="meme-canvas" width="500" height="500" onclick="onCanvasClick(event)">
+                Please don't use IE 3
+            </canvas>
+        </div>
+        <div class="meme-controls">
+            <label for="lineText">Text:</label>
+            <input type="text" name="lineText" id="lineText" oninput="onTextChange(this.value)">
+            <button onclick="onFontSize(1)">A +</button>
+            <button onclick="onFontSize(-1)">A -</button>
+            <button onclick="onAlignChange('left')">L</button>
+            <button onclick="onAlignChange('center')">C</button>
+            <button onclick="onAlignChange('right')">R</button>
+            <button onclick="onMoveLine(0, -1)">UP</button>
+            <button onclick="onMoveLine(0, 1)">DN</button>
+            <button onclick="onMoveLine(-1, 0)">LF</button>
+            <button onclick="onMoveLine(1, 0)">RT</button>
+            <select name="fontSelect" id="fontSelect" class="fonts" oninput="onFontSelect(this.value)">
+                <option value="impact">Impact</option>
+                <option value="arial">Arial</option>
+                <option value="monospace">Monospace</option>
+            </select>
+            <button onclick="onFontFillToggle()">A</button>
+            <input type="color" name="textColor" id="textColor">
+            <hr>
+            <label for="currLine">Current Line:</label>
+            <input type="number" name="currLine" id="currLine">
+        </div>
+    </main>
 
+    <div class="image-gallery">
+        <img src="img/1.jpg" alt="" data-img-id="1" onclick="onImageClick(this)">
+        <img src="img/2.jpg" alt="" data-img-id="2" onclick="onImageClick(this)">
+        <img src="img/3.jpg" alt="" data-img-id="3" onclick="onImageClick(this)">
+    </div>
     <script src="js/meme-service.js"></script>
     <script src="js/meme-controller.js"></script>
 </body>
