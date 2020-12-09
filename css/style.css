@@ -1,0 +1,23 @@
+* {
+    box-sizing: border-box;
+}
+
+html {
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+}
+body {
+    background-color: lemonchiffon;
+}
+
+.meme-container {
+    position: relative;
+    width: 550px;
+    height: 550px;
+    background-color: #555;
+}
+#meme-canvas {
+    position: absolute;
+    top: 22px;
+    left: 22px;
+    border: 2px solid black;
+}

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Mister Meme</title>
+</head>
+
+<body onload="onServiceInit()">
+    
+    <h1>Mister Meme</h1>
+
+    <div class="meme-container">
+        <canvas id="meme-canvas" width="500" height="500">
+            Please don't use IE 3
+        </canvas>
+    </div>
+    <div class="controls">
+        <label for="lineText">Text:</label>
+        <input type="text" name="lineText" id="lineText" oninput="onTextChange(this.value)">
+    </div>
+
+    <script src="js/meme-service.js"></script>
+    <script src="js/meme-controller.js"></script>
+</body>
+</html>
