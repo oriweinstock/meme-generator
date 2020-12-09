@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,47 +8,80 @@
     <title>Mister Meme</title>
 </head>
 
-<body onload="onServiceInit()">
-    
-    <h1>Mister Meme</h1>
+<body onkeydown="handleKeyboard(event)" onload="onServiceInit()">
 
-    <main class="meme-edit">
+    <header>
+        <nav class="top-nav flex space-between align-center mrg-bottom">
+            <h1>MEMEGEN</h1>
+            <ul class="clean-list flex fast-transition">
+                <a class="fast-transition" href="#" onclick="onGalleryClick()">
+                    <li>Gallery</li>
+                </a>
+                <a class="fast-transition" href="#">
+                    <li>About</li>
+                </a>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="meme-edit flex space-between mrg-bottom">
         <div class="meme-image">
             <canvas id="meme-canvas" width="500" height="500" onclick="onCanvasClick(event)">
                 Please don't use IE 3
             </canvas>
         </div>
-        <div class="meme-controls">
-            <label for="lineText">Text:</label>
-            <input type="text" name="lineText" id="lineText" oninput="onTextChange(this.value)">
-            <button onclick="onFontSize(1)">A +</button>
-            <button onclick="onFontSize(-1)">A -</button>
-            <button onclick="onAlignChange('left')">L</button>
-            <button onclick="onAlignChange('center')">C</button>
-            <button onclick="onAlignChange('right')">R</button>
-            <button onclick="onMoveLine(0, -1)">UP</button>
-            <button onclick="onMoveLine(0, 1)">DN</button>
-            <button onclick="onMoveLine(-1, 0)">LF</button>
-            <button onclick="onMoveLine(1, 0)">RT</button>
-            <select name="fontSelect" id="fontSelect" class="fonts" oninput="onFontSelect(this.value)">
-                <option value="impact">Impact</option>
-                <option value="arial">Arial</option>
-                <option value="monospace">Monospace</option>
-            </select>
-            <button onclick="onFontFillToggle()">A</button>
-            <input type="color" name="textColor" id="textColor">
-            <hr>
-            <label for="currLine">Current Line:</label>
-            <input type="number" name="currLine" id="currLine">
+        <div class="meme-controls flex space-between">
+            <div class="control-row mrg-bottom flex space-between">
+                <label for="lineText">Text:</label>
+                <input type="text" name="lineText" id="lineText" oninput="onTextChange(this.value)">
+            </div>
+            <div class="control-row mrg-bottom flex space-between">
+                <button onclick="onFontSize(1)">A +</button>
+                <button onclick="onFontSize(-1)">A -</button>
+                <button onclick="onAlignChange('left')">L</button>
+                <button onclick="onAlignChange('center')">C</button>
+                <button onclick="onAlignChange('right')">R</button>
+            </div>
+            <div class="control-row mrg-bottom flex space-between">
+                <button onclick="onMoveLine(0, -1)">UP</button>
+                <button onclick="onMoveLine(0, 1)">DN</button>
+                <button onclick="onMoveLine(-1, 0)">LF</button>
+                <button onclick="onMoveLine(1, 0)">RT</button>
+            </div>
+            
+            <div class="control-row mrg-bottom flex space-between">
+                <select name="fontSelect" id="fontSelect" class="fonts" oninput="onFontSelect(this.value)">
+                    <option value="impact">Impact</option>
+                    <option value="arial">Arial</option>
+                    <option value="monospace">Monospace</option>
+                </select>
+                <button onclick="onFontFillToggle()">A</button>
+                <input type="color" name="textColor" id="textColor">
+            </div>
+            <div class="control-row mrg-bottom flex space-between">
+                <label for="currLine">Current Line:</label>
+                <input type="number" name="currLine" id="currLine">
+                <button onclick="onAddLine()">Add</button>
+                <button onclick="onDeleteLine()">Del</button>
+                <button onclick="onUndoDelete()">Undo</button>
+            </div>
+            <div class="control-buttons control-row mrg-bottom flex space-between">
+                <a href="#" onclick="onDownload(this)" download="">Save Meme</a>
+                <a href="#" onclick="">Share</a>
+            </div>
         </div>
     </main>
 
-    <div class="image-gallery">
+    <div class="image-gallery hidden">
         <img src="img/1.jpg" alt="" data-img-id="1" onclick="onImageClick(this)">
         <img src="img/2.jpg" alt="" data-img-id="2" onclick="onImageClick(this)">
         <img src="img/3.jpg" alt="" data-img-id="3" onclick="onImageClick(this)">
     </div>
     <script src="js/meme-service.js"></script>
     <script src="js/meme-controller.js"></script>
+    <script src="js/gallery-service.js"></script>
+    <script src="js/gallery-controller.js"></script>
+    <script src="js/keyboard.js"></script>
 </body>
+
 </html>

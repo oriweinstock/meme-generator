@@ -1,7 +1,8 @@
 My Meme Generator v1.0
-----------------------
+======================
 
 Stage #1 - MVC/P
+----------------
 V create files
 V index.html basic layout
 V make currMeme object
@@ -11,6 +12,7 @@ V render textline
 V add html inputs for text edit. capture every keystroke (onchange?)
 
 Stage #2 - MVP Pre-design
+-------------------------
 V setup git
 V create basic image gallery
 V allow user to select image and load it to canvas
@@ -18,25 +20,39 @@ V build html form for all controls (font, x/y)
 V implement text formatting #1 (size, font family, x/y)
 V add 2nd textline
 V add support to edit any line. all inputs go to 'sub-obj' line
-- draw rect around selected line
+V draw rect around selected line
+
+Stage 2.5# - Xtra needs
+-----------------------
+- get line actual width (when? how to init?)
+V add download simple button
+V add line
+V delete line
+V add undo delete
+V add keyboard arrows support
+V limit line movement
 
 Stage #3 - Design A:
+--------------------
 - media query for basic page layout (on top / aside)
-- navbar
-- toggle view: image gallery / edit mode
+V navbar
+V format controls
+V toggle view: image gallery / edit mode
 - improve image gallery. cards with labels / used count
 - QA !
 - VERSION 1.0
 
 Stage #4 - Extra funcs:
+-----------------------
+- add help modal
 - implement text formatting #2 (color, stroke, align)
-- create navbar
-- show/hide images gallery
-- render image gallery
+- additional keyboard shortcuts (+/-/esc/ctrl-z)
+V show/hide images gallery
+V render image gallery
 
 Stage #5 - Bonuses:
+-------------------
 - save / download / share menu
-- implement download
 - add 'Drag & Drop' behaviour
 - build gImgs model for search/labels.
 - build gKeywords and fill it with data

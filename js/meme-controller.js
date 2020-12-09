@@ -1,15 +1,37 @@
 'use strict'
 
+// GLOBALS ....................................................................
 var gCanvas;
 var gCtx;
-var gLineIdx = 0;
+var gLineIdx = -1;
+var gIsLineHighLighted;
 
-function onControllerInit() {
+// INIT / GENERAL .............................................................
+function controllerInit() {
     console.log('Meme Controller Loaded.');
     gCanvas = document.querySelector('#meme-canvas');
     gCtx = gCanvas.getContext('2d');
+    gIsLineHighLighted = false;
     _clearInputs();
-    renderCanvas(gCurrMeme);
+    renderCanvas();
+}
+
+function onGalleryClick() {
+    document.querySelector('.image-gallery').classList.toggle('hidden');
+    document.querySelector('.meme-edit').classList.toggle('hidden');
+}
+// CANVAS FUNCS ...............................................................
+function onCanvasClick(ev) {
+    var { offsetX, offsetY } = ev;
+
+    var clickedLine = gCurrMeme.lines.findIndex((line) => {
+        return offsetX >= line.pos.x && offsetX <= line.pos.x + line.pos.xEnd
+            && offsetY <= line.pos.y && offsetY >= line.pos.y - line.size
+    });
+    gLineIdx = clickedLine;
+    setSelectedLine(gLineIdx);
+    _renderCurrLineInputs();
+    highLightLine();
 }
 
 function renderCanvas() {
@@ -17,14 +39,12 @@ function renderCanvas() {
     img.src = `img/${gCurrMeme.imgId}.jpg`
     img.onload = () => {
         gCtx.drawImage(img, 0, 0, gCanvas.width, gCanvas.height)
-        // renderCanvasLine(gCurrMeme.lines[0]);
         renderCanvasLines();
     }
 }
 
-var renderCanvasLines = () => {
-    gCurrMeme.lines.forEach(line => renderCanvasLine(line));
-}
+var renderCanvasLines = () => gCurrMeme.lines.forEach(line => renderCanvasLine(line));
+
 function renderCanvasLine(line) {
     gCtx.lineWidth = line.strokeWidth;
     gCtx.fillStyle = line.fillColor;
@@ -35,55 +55,95 @@ function renderCanvasLine(line) {
     gCtx.strokeText(line.txt, line.pos.x, line.pos.y)
 }
 
-function onImageClick(img) {
-    // console.log('img selected:', img.dataset.imgId)
-    setMemeImage(+img.dataset.imgId);
-    renderCanvas(gCurrMeme);
-}
-
+// TEXT EDIT/STYLE ............................................................
 function onTextChange(txt) {
-    setMemeLine(gLineIdx, txt);
+    setMemeLine(txt);
     renderCanvas();
 }
 
 function onFontSelect(fontName) {
     console.log(fontName);
-    setLineFont(gLineIdx, fontName);
+    setLineFont(fontName);
     renderCanvas();
 }
 
 function onFontSize(diff) {
-    changeFontSize(gLineIdx, +diff)
+    changeFontSize(+diff)
     renderCanvas();
 }
 
+// LINE FUNCS .................................................................
 function onMoveLine(diffX, diffY) {
-    moveLine(gLineIdx, diffX, diffY);
+    if (gLineIdx === -1) return;
+
+    moveLine(diffX, diffY);
     renderCanvas();
-}
-function _clearInputs() {
-    // TODO: qsALL => forEach
-    var elInput = document.querySelector('#lineText');
-    elInput.value = '';
-}
-
-function onCanvasClick(ev) {
-    var { offsetX, offsetY } = ev;
-
-    var clickedLine = gCurrMeme.lines.findIndex((line) => {
-        return offsetX >= line.pos.x && offsetX <= line.pos.x + line.pos.xEnd
-            && offsetY <= line.pos.y && offsetY >= line.pos.y - line.size
-    });
-    if (clickedLine > -1) gLineIdx = clickedLine;
-    _renderCurrLineLabel();
-}
-
-function _renderCurrLineLabel() {
-    document.querySelector('#currLine').value = gLineIdx;
 }
 
 function highLightLine(line = gLineIdx) {
+    if (line === -1 || gIsLineHighLighted) {
+        gIsLineHighLighted = false;
+        renderCanvas();
+        return;
+    }
+    let pos = gCurrMeme.lines[line].pos;
+
     gCtx.beginPath();
-    gCtx.rect(50, 50, 150, 150);
+    gCtx.rect(pos.x, pos.y, pos.xEnd, -40);
+    gIsLineHighLighted = true;
     gCtx.stroke();
+}
+
+function onAddLine() {
+    var newLine = {
+        txt: 'enter text...',
+        font: DEFAULT_FONT,
+        pos: { x: 100, y: 250, xEnd: 250 },
+        size: DEFAULT_SIZE,
+        align: 'center',
+        strokeWidth: 3,
+        strokeColor: '#000000',
+        fillColor: '#FFFFFF'
+    };
+
+    addLine(newLine);
+
+    renderCanvas();
+    _renderCurrLineInputs();
+}
+
+function onDeleteLine() {
+    if (gLineIdx < 0) return;
+    deleteLine(gLineIdx);
+    gLineIdx = -1;
+    renderCanvas();
+    _renderCurrLineInputs();
+}
+
+function onUndoDelete() {
+    undoDelete();
+    renderCanvas();
+}
+
+// CONTROLS ...................................................................
+function _renderCurrLineInputs() {
+
+    document.querySelector('#currLine').value = (gLineIdx > -1) ?
+        gLineIdx : '';
+    document.querySelector('#lineText').value = (gLineIdx > -1) ?
+        gCurrMeme.lines[gLineIdx].txt : '';
+    
+    // TODO - grey out undo if no undo
+}
+
+function _clearInputs() {
+    // TODO: qsALL => forEach
+    document.querySelector('#lineText').value = '';
+    document.querySelector('#currLine').value = '';
+}
+
+function onDownload(elLink) {
+    const data = gCanvas.toDataURL('image/jpeg');
+    elLink.href = data;
+    elLink.download = 'meme.jpg';
 }
