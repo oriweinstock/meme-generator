@@ -9,6 +9,7 @@
     C'ya!
 
 */
+
 // GLOBALS / CONSTS ...........................................................
 const DEFAULT_FONT = 'impact';
 const DEFAULT_SIZE = 40;
@@ -23,6 +24,7 @@ function onServiceInit() {
     console.log('Meme Service Loaded.');
     controllerInit();
     galleryInit();
+    canvasInit();
 }
 
 var gCurrMeme = {
@@ -89,6 +91,8 @@ function setMemeImage(imgId) {
 function setLineFont(fontName) {
     gCurrMeme.lines[_getCurrLineIdx()].font = fontName;
 }
+
+const setLineColor = (color) => gCurrMeme.lines[_getCurrLineIdx()].fillColor = color;
 
 function changeFontSize(diff) {
     console.log(diff)

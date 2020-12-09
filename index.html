@@ -58,12 +58,12 @@
                 <button onclick="onAlignChange('center')" title="to be implemented tommorow">C</button>
                 <button onclick="onAlignChange('right')" title="to be implemented tommorow">R</button>
             </div>
-            <div class="control-row mrg-bottom flex space-between">
+            <!-- <div class="control-row mrg-bottom flex space-between">
                 <button onclick="onMoveLine(0, -1)">↑</button>
                 <button onclick="onMoveLine(0, 1)">↓</button>
                 <button onclick="onMoveLine(-1, 0)">←</button>
                 <button onclick="onMoveLine(1, 0)">→</button>
-            </div>
+            </div> -->
             
             <div class="control-row mrg-bottom flex space-between">
                 <select name="fontSelect" id="fontSelect" class="fonts" oninput="onFontSelect(this.value)">
@@ -72,7 +72,7 @@
                     <option value="monospace">Monospace</option>
                 </select>
                 <button onclick="onFontFillToggle()" title="to be implemented tommorow">A</button>
-                <input type="color" name="textColor" id="textColor" title="to be implemented tommorow">
+                <input type="color" name="textColor" id="textColor" title="to be implemented tommorow" onchange="onColorChange(this.value)">
             </div>
             <div class="control-row mrg-bottom flex space-between">
                 <label for="currLine">Current Line:</label>
@@ -97,6 +97,7 @@
     <script src="js/meme-controller.js"></script>
     <script src="js/gallery-service.js"></script>
     <script src="js/gallery-controller.js"></script>
+    <script src="js/canvas.js"></script>
     <script src="js/keyboard.js"></script>
 </body>
 

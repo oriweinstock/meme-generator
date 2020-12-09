@@ -34,7 +34,7 @@ V limit line movement
 
 Stage #3 - Design A:
 --------------------
-- media query for basic page layout (on top / aside)
+V media query for basic page layout (on top / aside)
 V navbar
 V format controls
 V toggle view: image gallery / edit mode
@@ -44,14 +44,15 @@ V toggle view: image gallery / edit mode
 
 Stage #4 - Extra funcs:
 -----------------------
-- add help modal
-- implement text formatting #2 (color, stroke, align)
-- additional keyboard shortcuts (+/-/esc/ctrl-z)
+V add help modal
+v- implement text formatting #2 (color, stroke, align)
+V additional keyboard shortcuts (+/-/esc/ctrl-z)
 V show/hide images gallery
 V render image gallery
 
 Stage #5 - Bonuses:
 -------------------
+- better color picker
 - save / download / share menu
 - add 'Drag & Drop' behaviour
 - build gImgs model for search/labels.
@@ -63,6 +64,18 @@ Stage #5 - Bonuses:
 - Version 1.1
 
 Stage #6 - More Bonuses:
+------------------------
 - add Web Share API
 - add Hebrew Support
 - upload image from browser
+
+
+DAY #2 Suggested flow:
+======================
+- fix 'no line' selected issue. always one selected
+- on init: go to first line to write
+- add 'mouse is still down' for buttons
+- add drag and Drop
+- fix layout. GRID-AREAS for controls. fuck it.
+- start gallery search
+- add CSS transitions to many things
