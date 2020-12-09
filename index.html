@@ -10,6 +10,22 @@
 
 <body onkeydown="handleKeyboard(event)" onload="onServiceInit()">
 
+    <div class="modal hidden">
+        <div class="modal-top flex space-between align-center">
+            <h2 class="mrg-bottom">About Meme Generator v0.8</h2>
+            <button onclick="onAboutClick()">X</button>
+        </div>
+        <p>
+            How to use? click on a line, edit it with the buttons on the right, use your keyboard to move around.
+            This version has limited mobile support for now. Join our newsletter to receive product updates regulary.
+        </p>
+            Press 'Escape' or the 'X' button to close this modal.
+
+            <small>
+                ** Did you know? If you delete a line by mistake - you can undo it!
+            </small>
+
+    </div>
     <header>
         <nav class="top-nav flex space-between align-center mrg-bottom">
             <h1>MEMEGEN</h1>
@@ -17,7 +33,7 @@
                 <a class="fast-transition" href="#" onclick="onGalleryClick()">
                     <li>Gallery</li>
                 </a>
-                <a class="fast-transition" href="#">
+                <a class="fast-transition" href="#" onclick="onAboutClick()">
                     <li>About</li>
                 </a>
             </ul>
@@ -36,17 +52,17 @@
                 <input type="text" name="lineText" id="lineText" oninput="onTextChange(this.value)">
             </div>
             <div class="control-row mrg-bottom flex space-between">
-                <button onclick="onFontSize(1)">A +</button>
-                <button onclick="onFontSize(-1)">A -</button>
-                <button onclick="onAlignChange('left')">L</button>
-                <button onclick="onAlignChange('center')">C</button>
-                <button onclick="onAlignChange('right')">R</button>
+                <button onclick="onFontSize(1)" title="Inc. font Size">A +</button>
+                <button onclick="onFontSize(-1)" title="Dec. font Size">A -</button>
+                <button onclick="onAlignChange('left')" title="to be implemented tommorow">L</button>
+                <button onclick="onAlignChange('center')" title="to be implemented tommorow">C</button>
+                <button onclick="onAlignChange('right')" title="to be implemented tommorow">R</button>
             </div>
             <div class="control-row mrg-bottom flex space-between">
-                <button onclick="onMoveLine(0, -1)">UP</button>
-                <button onclick="onMoveLine(0, 1)">DN</button>
-                <button onclick="onMoveLine(-1, 0)">LF</button>
-                <button onclick="onMoveLine(1, 0)">RT</button>
+                <button onclick="onMoveLine(0, -1)">↑</button>
+                <button onclick="onMoveLine(0, 1)">↓</button>
+                <button onclick="onMoveLine(-1, 0)">←</button>
+                <button onclick="onMoveLine(1, 0)">→</button>
             </div>
             
             <div class="control-row mrg-bottom flex space-between">
@@ -55,19 +71,19 @@
                     <option value="arial">Arial</option>
                     <option value="monospace">Monospace</option>
                 </select>
-                <button onclick="onFontFillToggle()">A</button>
-                <input type="color" name="textColor" id="textColor">
+                <button onclick="onFontFillToggle()" title="to be implemented tommorow">A</button>
+                <input type="color" name="textColor" id="textColor" title="to be implemented tommorow">
             </div>
             <div class="control-row mrg-bottom flex space-between">
                 <label for="currLine">Current Line:</label>
                 <input type="number" name="currLine" id="currLine">
-                <button onclick="onAddLine()">Add</button>
-                <button onclick="onDeleteLine()">Del</button>
-                <button onclick="onUndoDelete()">Undo</button>
+                <button onclick="onAddLine()" title="Add a new line">Add</button>
+                <button onclick="onDeleteLine()" title="Delete this line">Del</button>
+                <button onclick="onUndoDelete()" title="Restore deleted line">Undo</button>
             </div>
             <div class="control-buttons control-row mrg-bottom flex space-between">
-                <a href="#" onclick="onDownload(this)" download="">Save Meme</a>
-                <a href="#" onclick="">Share</a>
+                <a href="#" onclick="onDownload(this)" download="" title="Download Meme">Download</a>
+                <a href="#" onclick="" title="to be implemented tommorow">Share</a>
             </div>
         </div>
     </main>

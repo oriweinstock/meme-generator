@@ -1,5 +1,14 @@
 'use strict'
 
+/*  Version 0.8
+    ------------
+
+    Almost a fully functional version, 1/3-responsive...
+    Line needed to be selected in order to manipulate it.
+    Don't forget to read the about section :-)
+    C'ya!
+
+*/
 // GLOBALS / CONSTS ...........................................................
 const DEFAULT_FONT = 'impact';
 const DEFAULT_SIZE = 40;
@@ -9,6 +18,7 @@ var gCanvasHeight = 500;
 
 var gUndoLine;
 
+// INIT .......................................................................
 function onServiceInit() {
     console.log('Meme Service Loaded.');
     controllerInit();
@@ -16,14 +26,14 @@ function onServiceInit() {
 }
 
 var gCurrMeme = {
-    imgId: 3,
+    imgId: 5,
     selectedLineIdx: -1,
 
     lines: [
         {
-            txt: 'Hello Meme',
+            txt: '2nd Sprint. 1st Day',
             font: 'impact',
-            pos: { x: 100, y: 200, xEnd: 200 },
+            pos: { x: 100, y: 50, xEnd: 310 },
             size: 40,
             align: 'center',
             strokeWidth: 3,
@@ -31,14 +41,14 @@ var gCurrMeme = {
             fillColor: '#FFFFFF'
         },
         {
-            txt: 'Second LINE!!',
+            txt: 'SUCCESS',
             font: 'impact',
-            pos: { x: 200, y: 400, xEnd: 270 },
+            pos: { x: 250, y: 450, xEnd: 190 },
             size: 50,
             align: 'center',
             strokeWidth: 3,
             strokeColor: '#000000',
-            fillColor: '#FFAAFF'
+            fillColor: 'yellow'
         }
     ]
 };
@@ -46,7 +56,7 @@ var gCurrMeme = {
 function setSelectedLine(idx) { gCurrMeme.selectedLineIdx = idx; }
 function getSelectedLine() { return selectedLineIdx; }
 
-function setMemeLine(txt) {
+function setMemeLineText(txt) {
     gCurrMeme.lines[_getCurrLineIdx()].txt = txt;
 }
 
@@ -80,16 +90,6 @@ function setLineFont(fontName) {
     gCurrMeme.lines[_getCurrLineIdx()].font = fontName;
 }
 
-function moveLine(diffX, diffY) {
-    let pos = gCurrMeme.lines[_getCurrLineIdx()].pos;
-
-    if (pos.x + diffX < 0 || pos.x + pos.xEnd + diffX > gCanvasWidth) return;
-    if (pos.y -40 + diffY < 0 || pos.y + diffY > gCanvasHeight) return;
-    pos.x += diffX;
-    pos.y += diffY;
-    // _validatePosition();
-}
-
 function changeFontSize(diff) {
     console.log(diff)
     gCurrMeme.lines[_getCurrLineIdx()].size += diff;
@@ -99,5 +99,15 @@ function _validatePosition() {
     let pos = gCurrMeme.lines[_getCurrLineIdx].pos;
 }
 
+// LINE FUNCS .................................................................
 var _getCurrLineIdx = () => gCurrMeme.selectedLineIdx;
 var _setCurrLineIdx = (idx) => gCurrMeme.selectedLineIdx = idx;
+
+function moveLine(diffX, diffY) {
+    let pos = gCurrMeme.lines[_getCurrLineIdx()].pos;
+
+    if (pos.x + diffX < 0 || pos.x + pos.xEnd + diffX > gCanvasWidth) return;
+    if (pos.y -40 + diffY < 0 || pos.y + diffY > gCanvasHeight) return;
+    pos.x += diffX;
+    pos.y += diffY;
+}

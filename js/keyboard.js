@@ -20,5 +20,8 @@ function handleKeyboard(ev) {
             ev.preventDefault();
             onMoveLine(1 * KEY_SPEED, 0);
             break;
+        case 'Escape':
+            document.querySelector('.modal').classList.add('hidden');
+            break;
     }
 }

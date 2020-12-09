@@ -21,7 +21,8 @@ header {
 }
 
 label {
-    font-size: 0.9rem;
+    font-size: 1rem;
+    padding-top: 5px;
 }
 
 button, input {
@@ -41,6 +42,12 @@ button {
 
 button:hover {
     background-color: #edd;
+}
+
+small {
+    margin-top: 20px;
+    font-weight: bold;
+    display: block;
 }
 .top-nav {
     width: 90%;
@@ -75,6 +82,7 @@ h1 {
     margin: 0;
     padding: 5px;
 }
+
 .meme-edit {
     width: 95vw;
     margin: 0 auto;
@@ -82,16 +90,15 @@ h1 {
 
 .meme-image {
     position: relative;
-    width: 550px;
-    height: 550px;
-    background-color: #555;
+    width: 510px;
+    height: 510px;
+    background-color: var(--orange);
 }
 
 #meme-canvas {
     position: absolute;
-    top: 22px;
-    left: 22px;
-    border: 2px solid black;
+    top: 5px;
+    left: 5px;
 }
 
 .meme-controls {
@@ -120,7 +127,7 @@ h1 {
     top: 90px;
     width: 90vw;
     left: 5vw;
-    background-color: lightblue;
+    background-color: var(--orange);
     display: grid;
     justify-content: center;
     align-items: center;
@@ -138,6 +145,32 @@ h1 {
 }
 .image-gallery img:hover {
     transform: rotate(5deg);
+}
+
+/* MODAL */
+
+.modal {
+    position: fixed;
+    z-index: 9;
+    background-color: #fff;
+    top: 5vh;
+    left: 5vw;
+    width: 450px;
+    padding: 25px;
+}
+.modal button {
+    background-color: var(--orange);
+}
+.modal h2 {
+    color: var(--orange);
+    text-decoration: underline;
+}
+.modal p {
+    line-height: 1.4rem;
+}
+.modal p::first-letter { 
+    font-weight: bold;
+    font-size: 1.7rem;
 }
 
 /* HELPERS */
@@ -167,4 +200,27 @@ h1 {
 }
 #currLine:hover {
     cursor: not-allowed;
+}
+
+/* MOBILE */
+@media (max-width: 500px) {
+    body {
+        background-color: #fff;
+    }
+
+    .meme-edit {
+        flex-direction: column;
+    }
+    .meme-image {
+        margin-bottom: 20px;
+        width: 100vw;
+        height: 360px;
+        width: 100vw;
+    }
+    #meme-canvas {
+        left: 10vw;
+    }
+    .meme-controls {
+        margin: 0 auto;
+    }
 }

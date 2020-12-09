@@ -12,6 +12,7 @@ function controllerInit() {
     gCanvas = document.querySelector('#meme-canvas');
     gCtx = gCanvas.getContext('2d');
     gIsLineHighLighted = false;
+    _addResizeListener();
     _clearInputs();
     renderCanvas();
 }
@@ -20,6 +21,11 @@ function onGalleryClick() {
     document.querySelector('.image-gallery').classList.toggle('hidden');
     document.querySelector('.meme-edit').classList.toggle('hidden');
 }
+
+function onAboutClick() {
+    document.querySelector('.modal').classList.toggle('hidden');    
+}
+
 // CANVAS FUNCS ...............................................................
 function onCanvasClick(ev) {
     var { offsetX, offsetY } = ev;
@@ -55,9 +61,19 @@ function renderCanvasLine(line) {
     gCtx.strokeText(line.txt, line.pos.x, line.pos.y)
 }
 
+function resizeCanvas() {
+    let elContainer = document.querySelector('.meme-image');
+    gCanvas.width = elContainer.offsetWidth;
+    gCanvas.height = elContainer.offsetHeight;
+}
+
 // TEXT EDIT/STYLE ............................................................
 function onTextChange(txt) {
-    setMemeLine(txt);
+    if (gLineIdx === -1) {
+        alert('please select a line 1st. Will be Fixed :)');
+        return;
+    }
+    setMemeLineText(txt);
     renderCanvas();
 }
 
@@ -146,4 +162,18 @@ function onDownload(elLink) {
     const data = gCanvas.toDataURL('image/jpeg');
     elLink.href = data;
     elLink.download = 'meme.jpg';
+}
+
+
+function _addResizeListener() {
+    addEventListener('resize', () => {
+        if (window.innerWidth < 600) {
+            gCanvas.style.width = '350px';
+            gCanvas.style.height = '350px';
+        } else {
+            gCanvas.style.width = '500px';
+            gCanvas.style.height = '500px';
+        }
+        renderCanvas();
+    })
 }

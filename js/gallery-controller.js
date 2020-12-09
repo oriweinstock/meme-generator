@@ -13,7 +13,6 @@ function renderGallery() {
         <img src="img/${img.id}.jpg" alt="image-${img.id}"
         data-img-id="${img.id}" onclick="onImageClick(this)">`;
     });
-    console.log(strHtmls)
     document.querySelector('.image-gallery').innerHTML = strHtmls.join('');
 }
 
