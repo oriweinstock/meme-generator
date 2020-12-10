@@ -1,6 +1,8 @@
 'use strict'
 
 var gMouseDown = false;
+var gBeforeDragPosition;
+var gDragOffsetX;
 
 function canvasInit() {
     console.log('Canvas module loaded.')
@@ -13,21 +15,41 @@ function canvasInit() {
 function onCanvasMouseDown(ev) {
     gMouseDown = true;
     let mousePos = _getCorrectOffsets(ev);
+    
     let clickedLine = _getClickedLineByPos(mousePos);
     if (clickedLine === -1) return;
-
+    else setCurrLineIdx(clickedLine);
+    
+    gDragOffsetX = _getDragOffsetX(mousePos.x);
+    mousePos.x += gDragOffsetX;
+    gBeforeDragPosition = mousePos;
+    
     setCurrLineIdx(clickedLine);
     _renderCurrLineInputs();
     highLightLine(clickedLine);
 }
+
 function onCanvasMouseMove(ev) {
     if (!gMouseDown) return;
+    let clickedLine = getCurrLineIdx();
     let mousePos = _getCorrectOffsets(ev);
+    mousePos.x = mousePos.x + gDragOffsetX;
+
     moveLine(null, null, mousePos);
     renderCanvas();
+    highLightLine(clickedLine);
 }
 function onCanvasMouseUp(ev) {
     gMouseDown = false;
+    ev.stopPropagation();
+}
+
+function onBodyMouseUp(ev) {
+    gMouseDown = false;
+    moveLine(null, null, gBeforeDragPosition);
+    gBeforeDragPosition = null;
+    ev.stopPropagation();
+    renderCanvas();
 }
 
 // DRAW .......................................................................
@@ -40,7 +62,9 @@ function renderCanvas() {
     }
 }
 
-const renderCanvasLines = () => gCurrMeme.lines.forEach((line, index) => renderCanvasLine(line, index));
+function renderCanvasLines() {
+    gCurrMeme.lines.forEach((line, index) => renderCanvasLine(line, index));
+}
 
 function renderCanvasLine(line, index) {
     gCtx.lineWidth = line.strokeWidth;
@@ -92,17 +116,25 @@ function _resizeCanvas() {
     gCanvas.style.height = canvasSize + 'px';
 }
 
-const _getClickedLineByPos = (clickPos) => {
+function _getClickedLineByPos(clickPos) {
     return gCurrMeme.lines.findIndex((line) => {
         return clickPos.x >= line.pos.x && clickPos.x <= line.pos.x + line.pos.width
             && clickPos.y <= line.pos.y && clickPos.y >= line.pos.y - line.pos.height
     });
 }
-const _getCanvasRatio = () => 500 / parseInt(gCanvas.style.width);
 
-const _getCorrectOffsets = (ev) => {
-    var { offsetX, offsetY } = ev;
+function _getCorrectOffsets(ev) {
+    let { offsetX, offsetY } = ev;
     offsetX *= _getCanvasRatio();
     offsetY *= _getCanvasRatio();
-    return {x: offsetX, y: offsetY}
+    return { x: offsetX, y: offsetY }
+}
+
+function _getDragOffsetX(posX) {
+    let linePos = getCurrLinePos();
+    return linePos.x - posX; 
+}
+
+function _getCanvasRatio() {
+    return 500 / parseInt(gCanvas.style.width); // 500 is fixed for now. TBD
 }

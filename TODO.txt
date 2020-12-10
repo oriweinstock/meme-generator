@@ -49,12 +49,44 @@ v- implement text formatting #2 (color, stroke, align)
 V additional keyboard shortcuts (+/-/esc/ctrl-z)
 V show/hide images gallery
 V render image gallery
+V add 'Drag & Drop' behaviour
 
+DAY #2 Suggested flow:
+======================
+V fix 'no line' selected issue. always one selected
+V on init: go to first line to write
+V REFACTORING SPRINT :-)
+- add 'mouse is still down' for buttons
+V add drag and Drop
+V fix layout. fuck it.
+- start gallery search
+V add CSS transitions to many things
+
+DAY #3 Missions:
+================
+V add body onmouseup to stop dragging
+- ^^^ bug on lower part of screen!?!
+- fix font on load bug
+V upgrade drag&drop to consider initial click offsetX !!
+- color picker. decide on 8 colors. that's it.
+- keep highlight while editing/dragging
+- fix mobile inputs to prevent still-possible zooming. fewer controls - and bigger.
+- auto focus on line input
+- finalize desktop control box as well. decide on rows, buttons to remove, icons.
+V limit font size
+- add sticker support. just like lines, but with 'gallery' in place.
+- fucking search.
+- wish list... in-line editing.
+- beautify css a bit... one-corner round? add theme color and more dark/bright sections.
+
+
+
+
+HISTORY:
 Stage #5 - Bonuses:
 -------------------
 - better color picker
 - save / download / share menu
-V add 'Drag & Drop' behaviour
 - build gImgs model for search/labels.
 - build gKeywords and fill it with data
 - add search input
@@ -68,15 +100,3 @@ Stage #6 - More Bonuses:
 - add Web Share API
 - add Hebrew Support
 - upload image from browser
-
-
-DAY #2 Suggested flow:
-======================
-V fix 'no line' selected issue. always one selected
-V on init: go to first line to write
-V REFACTORING SPRINT :-)
-- add 'mouse is still down' for buttons
-V add drag and Drop
-V fix layout. fuck it.
-- start gallery search
-V add CSS transitions to many things

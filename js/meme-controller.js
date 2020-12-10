@@ -26,11 +26,6 @@ function onAboutClick() {
 
 // TEXT EDIT/STYLE ............................................................
 function onTextChange(txt) {
-    let lineIdx = getCurrLineIdx();
-    if (lineIdx === -1) {
-        alert('please select a line 1st. Will be Fixed :)');
-        return;
-    }
     setMemeLineText(txt);
     renderCanvas();
 }
@@ -46,15 +41,12 @@ function onFontSize(diff) {
 }
 
 function onColorChange(value) {
-    console.log(value);
     setLineColor(value);
     renderCanvas();
 }
 
 // LINE FUNCS .................................................................
 function onMoveLine(diffX, diffY) {
-    let lineIdx = getCurrLineIdx();
-    if (lineIdx === -1) return;
     moveLine(diffX, diffY);
     renderCanvas();
 }
@@ -63,9 +55,8 @@ function onAddLine() {
     var newLine = {
         txt: 'enter text...',
         font: DEFAULT_FONT,
-        pos: { x: 100, y: 250, xEnd: 250 },
+        pos: { x: 100, y: 250 },
         size: DEFAULT_SIZE,
-        align: 'center',
         strokeWidth: 3,
         strokeColor: '#000000',
         fillColor: '#FFFFFF'
@@ -78,10 +69,7 @@ function onAddLine() {
 }
 
 function onDeleteLine() {
-    let lineIdx = getCurrLineIdx();
-    if (lineIdx < 0) return;
     deleteLine(lineIdx);
-    setCurrLineIdx(0);
     renderCanvas();
     _renderCurrLineInputs();
 }
@@ -94,18 +82,10 @@ function onUndoDelete() {
 // CONTROLS ...................................................................
 function _renderCurrLineInputs() {
     let lineIdx = getCurrLineIdx();
-    document.querySelector('#currLine').value = (lineIdx > -1) ?
-        lineIdx : '';
-    document.querySelector('#lineText').value = (lineIdx > -1) ?
-        gCurrMeme.lines[lineIdx].txt : '';
+    document.querySelector('#currLine').value = lineIdx;
+    document.querySelector('#lineText').value = gCurrMeme.lines[lineIdx].txt;
 
     // TODO - grey out undo if no undo
-}
-
-function _clearInputs() {
-    // TODO: qsALL => forEach
-    document.querySelector('#lineText').value = '';
-    document.querySelector('#currLine').value = '';
 }
 
 function onDownload(elLink) {

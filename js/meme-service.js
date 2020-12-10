@@ -28,6 +28,9 @@
 // GLOBALS / CONSTS ...........................................................
 const DEFAULT_FONT = 'impact';
 const DEFAULT_SIZE = 40;
+const MIN_FONT_SIZE = 16;
+const MAX_FONT_SIZE = 140;
+const FONT_SIZE_JUMPS = 4;
 
 var gCanvasWidth = 500;
 var gCanvasHeight = 500;
@@ -50,7 +53,7 @@ var gCurrMeme = {
     lines: [
         {
             txt: '2nd sprint | DAY #2',
-            font: '_impact',
+            font: 'impact',
             pos: { x: 30, y: 70, width: 310, height: 420},
             size: 50,
             strokeWidth: 2,
@@ -59,7 +62,7 @@ var gCurrMeme = {
         },
         {
             txt: 'MOBILE...',
-            font: '_impact',
+            font: 'impact',
             pos: { x: 94, y: 410, width: 190 , height: 490},
             size: 70,
             strokeWidth: 2,
@@ -71,7 +74,6 @@ var gCurrMeme = {
 
 function setMemeLineText(txt) {
     gCurrMeme.lines[gLineIdx].txt = txt;
-    renderCanvas();
 }
 
 function setLineArea(lineIdx, dimensions) {
@@ -99,7 +101,9 @@ function setLineColor(color) {
 }
 
 function changeFontSize(diff) {
-    gCurrMeme.lines[gLineIdx].size += diff;
+    if (gCurrMeme.lines[gLineIdx].size + diff * FONT_SIZE_JUMPS > MAX_FONT_SIZE ||
+        gCurrMeme.lines[gLineIdx].size + diff * FONT_SIZE_JUMPS < MIN_FONT_SIZE) return;
+    gCurrMeme.lines[gLineIdx].size += diff * FONT_SIZE_JUMPS;
 }
 
 function getCurrLineIdx() {
@@ -110,6 +114,9 @@ function setCurrLineIdx(idx) {
     gLineIdx = idx;
 }
 
+function getCurrLinePos() {
+    return gCurrMeme.lines[gLineIdx].pos;
+}
 function moveLine(diffX, diffY, mousePos) {
     let pos = gCurrMeme.lines[gLineIdx].pos;
 
@@ -133,5 +140,5 @@ function addLine(newLine) {
 function deleteLine() {
     if (gLineIdx === -1) return;
     gUndoLine = gCurrMeme.lines.splice(gLineIdx, 1)[0];
-    setCurrLineIdx(-1);
+    setCurrLineIdx(0);
 }

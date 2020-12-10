@@ -8,7 +8,7 @@
     <title>Mister Meme</title>
 </head>
 
-<body onkeydown="handleKeyboard(event)" onload="onServiceInit()">
+<body onkeydown="handleKeyboard(event)" onload="onServiceInit()" onmouseup="onBodyMouseUp(event)">
 
     <div class="modal hidden-left">
         <div class="modal-top flex space-between align-center">
@@ -43,7 +43,6 @@
 
     <main class="meme-edit flex space-between mrg-bottom">
         <div class="meme-image">
-            <!-- onCanvasClick(event) -->
             <canvas id="meme-canvas" width="500" height="500" onclick="" onmousedown="onCanvasMouseDown(event)"
                 onmousemove="onCanvasMouseMove(event)" onmouseup="onCanvasMouseUp(event)">
                 Please don't use IE 3
@@ -66,7 +65,7 @@
             </div>
             <div class="control-row mrg-bottom flex space-between">
                 <select name="fontSelect" id="fontSelect" class="fonts" oninput="onFontSelect(this.value)">
-                    <option value="_impact">Impact</option>
+                    <option value="impact">Impact</option>
                     <option value="arial">Arial</option>
                     <option value="monospace">Monospace</option>
                 </select>
@@ -89,10 +88,8 @@
     </main>
 
     <div class="image-gallery hidden-up">
-        <img src="img/1.jpg" alt="" data-img-id="1" onclick="onImageClick(this)">
-        <img src="img/2.jpg" alt="" data-img-id="2" onclick="onImageClick(this)">
-        <img src="img/3.jpg" alt="" data-img-id="3" onclick="onImageClick(this)">
     </div>
+
     <script src="js/meme-service.js"></script>
     <script src="js/meme-controller.js"></script>
     <script src="js/gallery-service.js"></script>
