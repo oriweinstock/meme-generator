@@ -57,6 +57,30 @@ function createImages() {
         {
             id: 12,
             keywords: ['funny']
+        },
+        {
+            id: 13,
+            keywords: ['funny']
+        },
+        {
+            id: 14,
+            keywords: ['funny']
+        },
+        {
+            id: 15,
+            keywords: ['funny']
+        },
+        {
+            id: 16,
+            keywords: ['funny']
+        },
+        {
+            id: 17,
+            keywords: ['funny']
+        },
+        {
+            id: 18,
+            keywords: ['funny']
         }
     ];
 }

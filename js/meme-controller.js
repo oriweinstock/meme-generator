@@ -3,7 +3,6 @@
 // GLOBALS ....................................................................
 var gCanvas;
 var gCtx;
-var gLineIdx = -1;
 var gIsLineHighLighted;
 
 // INIT / GENERAL .............................................................
@@ -14,7 +13,7 @@ function controllerInit() {
     gIsLineHighLighted = false;
     _addResizeListener();
     _resizeCanvas();
-    _clearInputs();
+    _renderCurrLineInputs();
     renderCanvas();
 }
 
@@ -29,7 +28,8 @@ function onAboutClick() {
 
 // TEXT EDIT/STYLE ............................................................
 function onTextChange(txt) {
-    if (gLineIdx === -1) {
+    let lineIdx = getCurrLineIdx();
+    if (lineIdx === -1) {
         alert('please select a line 1st. Will be Fixed :)');
         return;
     }
@@ -38,7 +38,6 @@ function onTextChange(txt) {
 }
 
 function onFontSelect(fontName) {
-    console.log(fontName);
     setLineFont(fontName);
     renderCanvas();
 }
@@ -56,8 +55,8 @@ function onColorChange(value) {
 
 // LINE FUNCS .................................................................
 function onMoveLine(diffX, diffY) {
-    if (gLineIdx === -1) return;
-
+    let lineIdx = getCurrLineIdx();
+    if (lineIdx === -1) return;
     moveLine(diffX, diffY);
     renderCanvas();
 }
@@ -81,9 +80,10 @@ function onAddLine() {
 }
 
 function onDeleteLine() {
-    if (gLineIdx < 0) return;
-    deleteLine(gLineIdx);
-    gLineIdx = -1;
+    let lineIdx = getCurrLineIdx(); 
+    if (lineIdx < 0) return;
+    deleteLine(lineIdx);
+    setCurrLineIdx(0);
     renderCanvas();
     _renderCurrLineInputs();
 }
@@ -95,11 +95,11 @@ function onUndoDelete() {
 
 // CONTROLS ...................................................................
 function _renderCurrLineInputs() {
-
-    document.querySelector('#currLine').value = (gLineIdx > -1) ?
-        gLineIdx : '';
-    document.querySelector('#lineText').value = (gLineIdx > -1) ?
-        gCurrMeme.lines[gLineIdx].txt : '';
+    let lineIdx = getCurrLineIdx(); 
+    document.querySelector('#currLine').value = (lineIdx > -1) ?
+        lineIdx : '';
+    document.querySelector('#lineText').value = (lineIdx > -1) ?
+        gCurrMeme.lines[lineIdx].txt : '';
 
     // TODO - grey out undo if no undo
 }

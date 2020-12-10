@@ -28,7 +28,7 @@
     </div>
     <header>
         <nav class="top-nav flex space-between align-center mrg-bottom">
-            <h1>MEMEGEN</h1>
+            <h1 class="sec-font">MEMEGEN</h1>
             <ul class="clean-list flex fast-transition">
                 <a class="fast-transition" href="#" onclick="onGalleryClick()">
                     <li>Gallery</li>
@@ -42,11 +42,18 @@
 
     <main class="meme-edit flex space-between mrg-bottom">
         <div class="meme-image">
-            <canvas id="meme-canvas" width="500" height="500" onclick="onCanvasClick(event)">
+            <!-- onCanvasClick(event) -->
+            <canvas id="meme-canvas" width="500" height="500" onclick="" 
+                onmousedown="onCanvasMouseDown(event)"
+                onmousemove="onCanvasMouseMove(event)"
+                onmouseup="onCanvasMouseUp(event)">
                 Please don't use IE 3
             </canvas>
         </div>
-        <div class="meme-controls flex space-between">
+        <div class="meme-controls flex">
+            <div class="control-row control-top mrg-bottom sec-font darker">
+                Playground
+            </div>
             <div class="control-row mrg-bottom flex space-between">
                 <label for="lineText">Text:</label>
                 <input type="text" name="lineText" id="lineText" oninput="onTextChange(this.value)">
@@ -81,7 +88,7 @@
                 <button onclick="onDeleteLine()" title="Delete this line">Del</button>
                 <button onclick="onUndoDelete()" title="Restore deleted line">Undo</button>
             </div>
-            <div class="control-buttons control-row mrg-bottom flex space-between">
+            <div class="control-buttons control-row flex darker">
                 <a href="#" onclick="onDownload(this)" download="" title="Download Meme">Download</a>
                 <a href="#" onclick="" title="to be implemented tommorow">Share</a>
             </div>

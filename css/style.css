@@ -75,9 +75,7 @@ a:hover {
 }
 
 h1 {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size: 1.8rem;
-    letter-spacing: 2px;
     color: white;
     margin: 0;
     padding: 5px;
@@ -102,21 +100,29 @@ h1 {
 }
 
 .meme-controls {
+    align-self: center;
+    width: 43vw;
     background-color: var(--orange);
     padding: 0.6rem;
     color: white;
     font-weight: bold;
     flex-direction: column;
+    justify-content: space-evenly;
 }
 
 .control-row {
-    padding-bottom: 20px;
-    border-bottom: 2px solid white;
+    padding: 10px 0px;
+    border-bottom: 2px solid rgb(253, 101, 0);
 }
-
+.control-top {
+    text-align: center;
+    font-size: 1.3rem;
+    border-bottom: none;
+}
 .control-buttons {
-    justify-content: center;
-    width: 70%;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 100%;
     margin: 0 auto;
     border-bottom: none;
 }
@@ -184,10 +190,19 @@ h1 {
 .hidden {
     visibility: hidden;
 }
+.darker {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+.sec-font {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    letter-spacing: 0.3rem;
+    text-transform: uppercase;
+    font-weight: 900;
+}
 .fast-transition {transition: 0.2s;}
 
 /* CONTROLS CUSTOMIZE */
-#lineText { width: 25vw;}
+#lineText { flex-grow: 1; margin-inline-start: 1rem;}
 #currLine { width: 40px; }
 #currLine::-webkit-outer-spin-button,
 #currLine::-webkit-inner-spin-button {
@@ -205,22 +220,24 @@ h1 {
 @media (max-width: 720px) {
     .meme-edit {
         flex-direction: column;
+        width: 83.3333vw;
     }
     .meme-image {
-        margin-bottom: 10px;
-        width: 100vw;
-        height: 87vw;
+        margin: 0px auto 10px auto;
+        width: 83.3333vw;
+        height: 83.3333vw;
     }
     #meme-canvas {
-        left: 9vw;
+        /* left: 9vw; */
     }
     .meme-controls {
+        width: 83.3333vw;
         margin: 0 auto;
     }
-}
+} 
 /* MOBILE */
 @media (max-width: 500px) {
-    .meme-edit {
+    /* .meme-edit {
         flex-direction: column;
     }
     .meme-image {
@@ -232,5 +249,5 @@ h1 {
     }
     .meme-controls {
         margin: 0 auto;
-    }
+    } */
 }
