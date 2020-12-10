@@ -5,7 +5,6 @@ function galleryControllerInit() {
     renderGallery();
 }
 
-// GALLERY ....................................................................
 function renderGallery() {
     var imgs = getImagesToDisplay();
     var strHtmls = imgs.map(img => {

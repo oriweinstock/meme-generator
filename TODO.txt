@@ -77,6 +77,6 @@ V on init: go to first line to write
 V REFACTORING SPRINT :-)
 - add 'mouse is still down' for buttons
 V add drag and Drop
-- fix layout. GRID-AREAS for controls. fuck it.
+V fix layout. fuck it.
 - start gallery search
-- add CSS transitions to many things
+V add CSS transitions to many things

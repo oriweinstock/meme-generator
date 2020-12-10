@@ -13,6 +13,7 @@ html {
 body {
     margin: 0;
     background-color: lemonchiffon;
+    touch-action: manipulation;
 }
 
 header {
@@ -46,6 +47,7 @@ button:hover {
 
 small {
     margin-top: 20px;
+    line-height: 1.4;
     font-weight: bold;
     display: block;
 }
@@ -91,6 +93,8 @@ h1 {
     width: 50vw;
     height: 50vw;
     background-color: var(--orange);
+    touch-action: manipulation;
+
 }
 
 #meme-canvas {
@@ -127,6 +131,7 @@ h1 {
     border-bottom: none;
 }
 
+/* GALLERY */
 .image-gallery {
     position: absolute;
     top: 90px;
@@ -139,7 +144,7 @@ h1 {
     padding: 20px;
     gap: 10px 10px;
     grid-template-columns: repeat(auto-fill, minmax(100px, 200px));
-    /* grid-auto-columns: auto; */
+    transition: transform .7s;
 }
 
 .image-gallery img {
@@ -153,7 +158,6 @@ h1 {
 }
 
 /* MODAL */
-
 .modal {
     position: fixed;
     z-index: 9;
@@ -162,6 +166,8 @@ h1 {
     left: 5vw;
     width: 450px;
     padding: 25px;
+
+    transition: transform .7s;
 }
 .modal button {
     background-color: var(--orange);
@@ -187,6 +193,14 @@ h1 {
     list-style-type: none;
     margin: 0;
 }
+.hidden-up {
+    transform: translateY(-100%);
+    top: 0px;
+}
+.hidden-left {
+    transform: translateX(-100%);
+    left: 0px;
+}
 .hidden {
     visibility: hidden;
 }
@@ -194,6 +208,8 @@ h1 {
     background-color: rgba(0, 0, 0, 0.1);
 }
 .sec-font {
+    /* font-family: _impact; */
+
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     letter-spacing: 0.3rem;
     text-transform: uppercase;
@@ -216,6 +232,13 @@ h1 {
     cursor: not-allowed;
 }
 
+/* FONTS */
+@font-face {
+    font-family: _impact;
+    src: url(../fonts/impactreg.ttf) format('trutype');
+    src: url(../fonts/impactreg.eot) format('embedded-open-type');
+    src: url(../fonts/impactreg.woff) format('woff');
+}
 /* TABLET */
 @media (max-width: 720px) {
     .meme-edit {
@@ -227,9 +250,6 @@ h1 {
         width: 83.3333vw;
         height: 83.3333vw;
     }
-    #meme-canvas {
-        /* left: 9vw; */
-    }
     .meme-controls {
         width: 83.3333vw;
         margin: 0 auto;
@@ -237,17 +257,26 @@ h1 {
 } 
 /* MOBILE */
 @media (max-width: 500px) {
-    /* .meme-edit {
+    .meme-edit {
         flex-direction: column;
+        width: 96.1538vw;
     }
     .meme-image {
-        margin-bottom: 20px;
-        width: 100vw;
-    }
-    #meme-canvas {
-        left: 10vw;
+        margin: 0px auto 10px auto;
+        width: 96.1538vw;
+        height: 96.1538vw;
     }
     .meme-controls {
+        width: 96.1538vw;
         margin: 0 auto;
-    } */
+    }
+    .image-gallery {
+        grid-template-columns: repeat(auto-fill, minmax(100px, 150px));
+    }
+    .image-gallery img {
+        height: 150px;
+    }
+    .modal {
+        width: 350px;
+    }
 }

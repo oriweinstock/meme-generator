@@ -16,6 +16,13 @@
     - Major clean up / refactor
     - Controls design upgrade
     - Fixed layout problems on different widths
+
+    Version 1.0a
+    -------------
+    - Welcome TOUCH-HANDLER :-)
+    - CSS animations
+    - Font load (almost) for Safari w/o Impact
+    - 
 */
 
 // GLOBALS / CONSTS ...........................................................
@@ -37,26 +44,24 @@ function onServiceInit() {
 }
 
 var gCurrMeme = {
-    imgId: 5,
+    imgId: 6,
     // selectedLineIdx: 0, // USELESS !! 
 
     lines: [
         {
-            txt: '2nd Sprint. 1st Day',
-            font: 'impact',
-            pos: { x: 100, y: 50, width: 310, height: 420},
-            size: 40,
-            align: 'center',
+            txt: '2nd sprint | DAY #2',
+            font: '_impact',
+            pos: { x: 30, y: 70, width: 310, height: 420},
+            size: 50,
             strokeWidth: 2,
             strokeColor: '#000000',
             fillColor: '#FFFFFF'
         },
         {
-            txt: 'SUCCESS',
-            font: 'impact',
-            pos: { x: 250, y: 450, width: 190 , height: 490},
-            size: 50,
-            align: 'center',
+            txt: 'MOBILE...',
+            font: '_impact',
+            pos: { x: 94, y: 410, width: 190 , height: 490},
+            size: 70,
             strokeWidth: 2,
             strokeColor: '#000000',
             fillColor: 'yellow'
@@ -80,18 +85,32 @@ function undoDelete() {
         gUndoLine = null;
     }
 }
-const setMemeImage = (imgId) => gCurrMeme.imgId = imgId;
-const setLineFont = (fontName) => gCurrMeme.lines[gLineIdx].font = fontName;
-const setLineColor = (color) => gCurrMeme.lines[gLineIdx].fillColor = color;
-const changeFontSize = (diff) => gCurrMeme.lines[gLineIdx].size += diff;
 
+function setMemeImage(imgId) {
+    gCurrMeme.imgId = imgId;
+}
 
-// LINE FUNCS .................................................................
-var getCurrLineIdx = () => gLineIdx;
-var setCurrLineIdx = (idx) => gLineIdx = idx;
+function setLineFont(fontName) {
+    gCurrMeme.lines[gLineIdx].font = fontName;
+}
+
+function setLineColor(color) {
+    gCurrMeme.lines[gLineIdx].fillColor = color;
+}
+
+function changeFontSize(diff) {
+    gCurrMeme.lines[gLineIdx].size += diff;
+}
+
+function getCurrLineIdx() {
+    return gLineIdx;
+} 
+
+function setCurrLineIdx(idx) {
+    gLineIdx = idx;
+}
 
 function moveLine(diffX, diffY, mousePos) {
-    // console.log(mousePos);
     let pos = gCurrMeme.lines[gLineIdx].pos;
 
     if (mousePos) {

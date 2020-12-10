@@ -11,19 +11,17 @@ function controllerInit() {
     gCanvas = document.querySelector('#meme-canvas');
     gCtx = gCanvas.getContext('2d');
     gIsLineHighLighted = false;
-    _addResizeListener();
-    _resizeCanvas();
-    _renderCurrLineInputs();
     renderCanvas();
+    addTouchListeners();
 }
 
 function onGalleryClick() {
-    document.querySelector('.image-gallery').classList.toggle('hidden');
+    document.querySelector('.image-gallery').classList.toggle('hidden-up');
     document.querySelector('.meme-edit').classList.toggle('hidden');
 }
 
 function onAboutClick() {
-    document.querySelector('.modal').classList.toggle('hidden');
+    document.querySelector('.modal').classList.toggle('hidden-left');
 }
 
 // TEXT EDIT/STYLE ............................................................
@@ -80,7 +78,7 @@ function onAddLine() {
 }
 
 function onDeleteLine() {
-    let lineIdx = getCurrLineIdx(); 
+    let lineIdx = getCurrLineIdx();
     if (lineIdx < 0) return;
     deleteLine(lineIdx);
     setCurrLineIdx(0);
@@ -95,7 +93,7 @@ function onUndoDelete() {
 
 // CONTROLS ...................................................................
 function _renderCurrLineInputs() {
-    let lineIdx = getCurrLineIdx(); 
+    let lineIdx = getCurrLineIdx();
     document.querySelector('#currLine').value = (lineIdx > -1) ?
         lineIdx : '';
     document.querySelector('#lineText').value = (lineIdx > -1) ?

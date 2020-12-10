@@ -6,24 +6,10 @@ function canvasInit() {
     console.log('Canvas module loaded.')
     _addResizeListener();
     _resizeCanvas();
-}
-// CANVAS FUNCS ...............................................................
-function onCanvasClick(ev) {
-    var { offsetX, offsetY } = ev;
-    offsetX *= _getCanvasRatio();
-    offsetY *= _getCanvasRatio();
-
-    let clickedLine = gCurrMeme.lines.findIndex((line) => {
-        return offsetX >= line.pos.x && offsetX <= line.pos.x + line.pos.width
-            && offsetY <= line.pos.y && offsetY >= line.pos.y - line.pos.height
-    });
-    console.log(clickedLine)
-    if (clickedLine === -1) return;
-    setCurrLineIdx(clickedLine);
     _renderCurrLineInputs();
-    highLightLine(clickedLine);
 }
 
+// MOUSE ......................................................................
 function onCanvasMouseDown(ev) {
     gMouseDown = true;
     let mousePos = _getCorrectOffsets(ev);
@@ -43,6 +29,8 @@ function onCanvasMouseMove(ev) {
 function onCanvasMouseUp(ev) {
     gMouseDown = false;
 }
+
+// DRAW .......................................................................
 function renderCanvas() {
     var img = new Image();
     img.src = `img/${gCurrMeme.imgId}.jpg`
@@ -58,7 +46,7 @@ function renderCanvasLine(line, index) {
     gCtx.lineWidth = line.strokeWidth;
     gCtx.fillStyle = line.fillColor;
     gCtx.strokeStyle = line.strokeColor;
-    gCtx.font = `normal 900 ${line.size}px ${line.font}`;
+    gCtx.font = `normal 400 ${line.size}px ${line.font}`;
     gCtx.fillText(line.txt, line.pos.x, line.pos.y);
     gCtx.strokeText(line.txt, line.pos.x, line.pos.y);
 
@@ -83,6 +71,7 @@ function highLightLine(line = 0) {
     gCtx.stroke();
 }
 
+// UTILS ......................................................................
 function _addResizeListener() {
     addEventListener('resize', () => {
         _resizeCanvas();
@@ -92,9 +81,15 @@ function _addResizeListener() {
 
 function _resizeCanvas() {
     let windowWidth = window.innerWidth;
-    let canvasSize = (windowWidth > 720) ? (windowWidth / 2) + 'px' : (windowWidth / 1.2) + 'px';
-    gCanvas.style.width = canvasSize;
-    gCanvas.style.height = canvasSize;
+    let canvasSize;
+
+    // numbers based on 'px' media queries
+    if (windowWidth > 720) canvasSize = windowWidth / 2;
+    else if (windowWidth > 500) canvasSize = windowWidth / 1.2;
+    else canvasSize = windowWidth / 1.04;
+
+    gCanvas.style.width = canvasSize + 'px';
+    gCanvas.style.height = canvasSize + 'px';
 }
 
 const _getClickedLineByPos = (clickPos) => {

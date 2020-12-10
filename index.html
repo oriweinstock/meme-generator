@@ -10,20 +10,21 @@
 
 <body onkeydown="handleKeyboard(event)" onload="onServiceInit()">
 
-    <div class="modal hidden">
+    <div class="modal hidden-left">
         <div class="modal-top flex space-between align-center">
-            <h2 class="mrg-bottom">About Meme Generator v0.8</h2>
+            <h2 class="mrg-bottom">About Meme Generator v1.0a</h2>
             <button onclick="onAboutClick()">X</button>
         </div>
         <p>
-            How to use? click on a line, edit it with the buttons on the right, use your keyboard to move around.
-            This version has limited mobile support for now. Join our newsletter to receive product updates regulary.
+            How to use? click on a line, edit it with the buttons on the right or use your keyboard/mouse to move
+            around.
+            This version is mobile friendly. Join our newsletter to receive product updates regulary.
         </p>
-            Press 'Escape' or the 'X' button to close this modal.
+        Press 'Escape' or the 'X' button to close this modal.
 
-            <small>
-                ** Did you know? If you delete a line by mistake - you can undo it!
-            </small>
+        <small>
+            ** Did you know? Safari doesn't have IMPACT font! hence a safari-bug to be fixed later.
+        </small>
 
     </div>
     <header>
@@ -43,10 +44,8 @@
     <main class="meme-edit flex space-between mrg-bottom">
         <div class="meme-image">
             <!-- onCanvasClick(event) -->
-            <canvas id="meme-canvas" width="500" height="500" onclick="" 
-                onmousedown="onCanvasMouseDown(event)"
-                onmousemove="onCanvasMouseMove(event)"
-                onmouseup="onCanvasMouseUp(event)">
+            <canvas id="meme-canvas" width="500" height="500" onclick="" onmousedown="onCanvasMouseDown(event)"
+                onmousemove="onCanvasMouseMove(event)" onmouseup="onCanvasMouseUp(event)">
                 Please don't use IE 3
             </canvas>
         </div>
@@ -65,21 +64,15 @@
                 <button onclick="onAlignChange('center')" title="to be implemented tommorow">C</button>
                 <button onclick="onAlignChange('right')" title="to be implemented tommorow">R</button>
             </div>
-            <!-- <div class="control-row mrg-bottom flex space-between">
-                <button onclick="onMoveLine(0, -1)">↑</button>
-                <button onclick="onMoveLine(0, 1)">↓</button>
-                <button onclick="onMoveLine(-1, 0)">←</button>
-                <button onclick="onMoveLine(1, 0)">→</button>
-            </div> -->
-            
             <div class="control-row mrg-bottom flex space-between">
                 <select name="fontSelect" id="fontSelect" class="fonts" oninput="onFontSelect(this.value)">
-                    <option value="impact">Impact</option>
+                    <option value="_impact">Impact</option>
                     <option value="arial">Arial</option>
                     <option value="monospace">Monospace</option>
                 </select>
                 <button onclick="onFontFillToggle()" title="to be implemented tommorow">A</button>
-                <input type="color" name="textColor" id="textColor" title="to be implemented tommorow" onchange="onColorChange(this.value)">
+                <input type="color" name="textColor" id="textColor" title="to be implemented tommorow"
+                    onchange="onColorChange(this.value)">
             </div>
             <div class="control-row mrg-bottom flex space-between">
                 <label for="currLine">Current Line:</label>
@@ -95,7 +88,7 @@
         </div>
     </main>
 
-    <div class="image-gallery hidden">
+    <div class="image-gallery hidden-up">
         <img src="img/1.jpg" alt="" data-img-id="1" onclick="onImageClick(this)">
         <img src="img/2.jpg" alt="" data-img-id="2" onclick="onImageClick(this)">
         <img src="img/3.jpg" alt="" data-img-id="3" onclick="onImageClick(this)">
@@ -105,7 +98,7 @@
     <script src="js/gallery-service.js"></script>
     <script src="js/gallery-controller.js"></script>
     <script src="js/canvas.js"></script>
-    <script src="js/keyboard.js"></script>
+    <script src="js/input-handler.js"></script>
 </body>
 
 </html>
