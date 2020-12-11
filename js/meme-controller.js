@@ -12,9 +12,11 @@ function controllerInit() {
     gCtx = gCanvas.getContext('2d');
     gIsLineHighLighted = false;
     renderCanvas();
+    renderColorPicker();
     addTouchListeners();
 }
 
+// TOP-NAV ....................................................................
 function onGalleryClick() {
     document.querySelector('.image-gallery').classList.toggle('hidden-up');
     document.querySelector('.meme-edit').classList.toggle('hidden');
@@ -24,7 +26,17 @@ function onAboutClick() {
     document.querySelector('.modal').classList.toggle('hidden-left');
 }
 
-// TEXT EDIT/STYLE ............................................................
+function renderColorPicker() {
+    var colors = getColorsToDisplay();
+    var strHtmls = colors.map(color => {
+        return `<div class="color round-corner" data-color="${color}"
+        onclick="onColorClick(this.dataset)" 
+        style="background-color: ${color}"></div>`
+    });
+    document.querySelector('.color-picker').innerHTML = strHtmls.join('');
+}
+
+// UPDATE .....................................................................
 function onTextChange(txt) {
     setMemeLineText(txt);
     renderCanvas();
@@ -35,8 +47,8 @@ function onFontSelect(fontName) {
     renderCanvas();
 }
 
-function onFontSize(diff) {
-    changeFontSize(+diff)
+function onFontSize(diff, ev) {
+    setFontSize(+diff)
     renderCanvas();
 }
 
@@ -45,12 +57,21 @@ function onColorChange(value) {
     renderCanvas();
 }
 
-// LINE FUNCS .................................................................
+function onColorPickerClick() {
+    document.querySelector('.color-picker').classList.toggle('folded-up');
+}
+
+function onColorClick(data) {
+    setLineColor(data.color);
+    renderCanvas();
+}
+
 function onMoveLine(diffX, diffY) {
     moveLine(diffX, diffY);
     renderCanvas();
 }
 
+// CREATE .....................................................................
 function onAddLine() {
     var newLine = {
         txt: 'enter text...',
@@ -63,15 +84,13 @@ function onAddLine() {
     };
 
     addLine(newLine);
-
     renderCanvas();
-    _renderCurrLineInputs();
 }
 
+// DELETE .....................................................................
 function onDeleteLine() {
-    deleteLine(lineIdx);
+    deleteLine();
     renderCanvas();
-    _renderCurrLineInputs();
 }
 
 function onUndoDelete() {
@@ -79,15 +98,7 @@ function onUndoDelete() {
     renderCanvas();
 }
 
-// CONTROLS ...................................................................
-function _renderCurrLineInputs() {
-    let lineIdx = getCurrLineIdx();
-    document.querySelector('#currLine').value = lineIdx;
-    document.querySelector('#lineText').value = gCurrMeme.lines[lineIdx].txt;
-
-    // TODO - grey out undo if no undo
-}
-
+// ACTIONS ....................................................................
 function onDownload(elLink) {
     const data = gCanvas.toDataURL('image/jpeg');
     elLink.href = data;

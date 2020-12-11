@@ -1,64 +1,127 @@
 'use strict'
 
+// Handle line selection/drag
 var gMouseDown = false;
 var gBeforeDragPosition;
 var gDragOffsetX;
+var gIsNoneSelected = true;
+
+// Handle inline editing
+var gIsInlineEdit = false;
+var gIsCursorBlink = true;
+var gBlinkTimer;
+const BLINK_TIME = 400;
 
 function canvasInit() {
     console.log('Canvas module loaded.')
     _addResizeListener();
     _resizeCanvas();
-    _renderCurrLineInputs();
 }
 
 // MOUSE ......................................................................
 function onCanvasMouseDown(ev) {
     gMouseDown = true;
+    clearInterval(gBlinkTimer);
     let mousePos = _getCorrectOffsets(ev);
     
     let clickedLine = _getClickedLineByPos(mousePos);
-    if (clickedLine === -1) return;
-    else setCurrLineIdx(clickedLine);
+    if (clickedLine === -1) {
+        gIsNoneSelected = true;
+        gMouseDown = false;
+        renderCanvas();
+        return;
+    }
+    gIsNoneSelected = false;
+    setCurrLineIdx(clickedLine);
     
     gDragOffsetX = _getDragOffsetX(mousePos.x);
     mousePos.x += gDragOffsetX;
     gBeforeDragPosition = mousePos;
     
-    setCurrLineIdx(clickedLine);
-    _renderCurrLineInputs();
-    highLightLine(clickedLine);
+    renderCanvas();
 }
 
 function onCanvasMouseMove(ev) {
     if (!gMouseDown) return;
-    let clickedLine = getCurrLineIdx();
     let mousePos = _getCorrectOffsets(ev);
     mousePos.x = mousePos.x + gDragOffsetX;
-
+    
     moveLine(null, null, mousePos);
+    gIsInlineEdit = false;
     renderCanvas();
-    highLightLine(clickedLine);
 }
+
 function onCanvasMouseUp(ev) {
     gMouseDown = false;
-    ev.stopPropagation();
-}
-
-function onBodyMouseUp(ev) {
-    gMouseDown = false;
-    moveLine(null, null, gBeforeDragPosition);
+    gIsInlineEdit = false;
     gBeforeDragPosition = null;
     ev.stopPropagation();
     renderCanvas();
 }
 
+function onCanvasDblClick(ev) { // inline editing
+    console.log('mouse dbl clicked');
+    gIsInlineEdit = true;
+    gBlinkTimer = setInterval(() => {
+        gIsCursorBlink = !gIsCursorBlink;
+        renderCanvas();
+    }, BLINK_TIME);
+    setInlineEditFocus();
+}
+
+function onBodyMouseUp(ev) {    // avoid non-ending drags
+    gMouseDown = false;
+    if (gBeforeDragPosition) moveLine(null, null, gBeforeDragPosition);
+    gBeforeDragPosition = null;
+    ev.stopPropagation();
+}
+
+
+// INLINE EDIT ................................................................
+function setInlineEditFocus() {
+    var txt = getCurrLineTxt();
+    document.querySelector('[name="inlineText"]').value = txt;
+    var elInlineTxt = document.querySelector('[name="inlineText"]');
+    elInlineTxt.focus();
+    elInlineTxt.scrollLeft = elInlineTxt.scrollWidth;
+}
+
 // DRAW .......................................................................
+function highLightCurrLine() {
+    if (gIsNoneSelected) return;
+    let line = getCurrLineIdx();
+    let pos = gCurrMeme.lines[line].pos;
+
+    gCtx.beginPath();
+    if (gIsInlineEdit) {
+        // draw single underline
+        let lineWidth = (pos.width > 70) ? pos.width : 70;
+        gCtx.beginPath();
+        gCtx.strokeStyle = 'black';
+        gCtx.moveTo(pos.x - 10, pos.y + 10);
+        gCtx.lineTo(pos.x + lineWidth, pos.y + 10);
+        gCtx.closePath();
+        gCtx.stroke();
+        // draw cursor
+        gCtx.beginPath();
+        gCtx.strokeStyle =  'white';
+        gCtx.moveTo(pos.x + pos.width,  pos.y + 20);
+        gCtx.lineTo(pos.x + pos.width, pos.y - pos.height);
+        gCtx.closePath();
+        if (!gIsCursorBlink) gCtx.stroke();
+    } else {
+        gCtx.rect(pos.x - 10, pos.y + 10, pos.width + 15, (-1 * pos.height) - 10);
+        gCtx.stroke();
+    }
+}
+
 function renderCanvas() {
     var img = new Image();
     img.src = `img/${gCurrMeme.imgId}.jpg`
     img.onload = () => {
         gCtx.drawImage(img, 0, 0, gCanvas.width, gCanvas.height)
         renderCanvasLines();
+        highLightCurrLine();
     }
 }
 
@@ -81,20 +144,10 @@ function renderCanvasLine(line, index) {
     });
 }
 
-function highLightLine(line = 0) {
-    if (line === -1 || gIsLineHighLighted) {
-        gIsLineHighLighted = false;
-        renderCanvas();
-        return;
-    }
-    let pos = gCurrMeme.lines[line].pos;
-
-    gCtx.beginPath();
-    gCtx.rect(pos.x - 10, pos.y + 10, pos.width + 15, (-1 * pos.height) - 10);
-    gIsLineHighLighted = true;
-    gCtx.stroke();
+// FLOAT-BAR ..................................................................
+function renderFloatBar() {
+    document.querySelector('.float-bar').classList.remove('hidden');
 }
-
 // UTILS ......................................................................
 function _addResizeListener() {
     addEventListener('resize', () => {

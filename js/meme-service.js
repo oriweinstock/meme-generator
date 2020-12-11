@@ -31,12 +31,22 @@ const DEFAULT_SIZE = 40;
 const MIN_FONT_SIZE = 16;
 const MAX_FONT_SIZE = 140;
 const FONT_SIZE_JUMPS = 4;
+const COLORS = [
+    '#ffffff',
+    '#ffe600',
+    '#bdaef3',
+    '#cbffc6',
+    '#ff0000',
+    '#fc9191',
+    '#bfffff',
+    '#96ff89'
+];
 
 var gCanvasWidth = 500;
 var gCanvasHeight = 500;
 
 var gUndoLine;
-var gLineIdx = 0;   // Note to staff: meme.selectedLineIdx is useless. no reason to store it within the object, it is just for editing 1 meme
+var gLineIdx = 0;   // meme.selectedLineIdx is useless. no reason to store it within the object, it is just for editing 1 meme
 
 // INIT .......................................................................
 function onServiceInit() {
@@ -46,6 +56,7 @@ function onServiceInit() {
     canvasInit();
 }
 
+// CREATE .....................................................................
 var gCurrMeme = {
     imgId: 6,
     // selectedLineIdx: 0, // USELESS !! 
@@ -54,7 +65,7 @@ var gCurrMeme = {
         {
             txt: '2nd sprint | DAY #2',
             font: 'impact',
-            pos: { x: 30, y: 70, width: 310, height: 420},
+            pos: { x: 30, y: 70, width: 310, height: 420 },
             size: 50,
             strokeWidth: 2,
             strokeColor: '#000000',
@@ -63,7 +74,7 @@ var gCurrMeme = {
         {
             txt: 'MOBILE...',
             font: 'impact',
-            pos: { x: 94, y: 410, width: 190 , height: 490},
+            pos: { x: 94, y: 410, width: 190, height: 490 },
             size: 70,
             strokeWidth: 2,
             strokeColor: '#000000',
@@ -72,51 +83,33 @@ var gCurrMeme = {
     ]
 };
 
-function setMemeLineText(txt) {
-    gCurrMeme.lines[gLineIdx].txt = txt;
+function addLine(newLine) {
+    gCurrMeme.lines.push(newLine);
+    setCurrLineIdx(gCurrMeme.lines.length - 1);
 }
 
-function setLineArea(lineIdx, dimensions) {
-    gCurrMeme.lines[lineIdx].pos.width = dimensions.width; 
-    gCurrMeme.lines[lineIdx].pos.height = dimensions.height; 
-}
-
-function undoDelete() {
-    if (gUndoLine) {
-        gCurrMeme.lines.push(gUndoLine);
-        gUndoLine = null;
-    }
-}
-
-function setMemeImage(imgId) {
-    gCurrMeme.imgId = imgId;
-}
-
-function setLineFont(fontName) {
-    gCurrMeme.lines[gLineIdx].font = fontName;
-}
-
-function setLineColor(color) {
-    gCurrMeme.lines[gLineIdx].fillColor = color;
-}
-
-function changeFontSize(diff) {
-    if (gCurrMeme.lines[gLineIdx].size + diff * FONT_SIZE_JUMPS > MAX_FONT_SIZE ||
-        gCurrMeme.lines[gLineIdx].size + diff * FONT_SIZE_JUMPS < MIN_FONT_SIZE) return;
-    gCurrMeme.lines[gLineIdx].size += diff * FONT_SIZE_JUMPS;
-}
-
+// READ .......................................................................
 function getCurrLineIdx() {
     return gLineIdx;
-} 
-
-function setCurrLineIdx(idx) {
-    gLineIdx = idx;
 }
 
 function getCurrLinePos() {
     return gCurrMeme.lines[gLineIdx].pos;
 }
+
+function getCurrLineTxt() {
+    return gCurrMeme.lines[gLineIdx].txt;
+}
+
+function getColorsToDisplay() {
+    return COLORS;
+}
+
+function getCanvasSize() {
+    return gCanvasWidth;
+}
+
+// UPDATE ....................................................................
 function moveLine(diffX, diffY, mousePos) {
     let pos = gCurrMeme.lines[gLineIdx].pos;
 
@@ -132,13 +125,48 @@ function moveLine(diffX, diffY, mousePos) {
     pos.y += diffY;
 }
 
-function addLine(newLine) {
-    gCurrMeme.lines.push(newLine);
-    setCurrLineIdx(gCurrMeme.lines.length - 1);
+function setCurrLineIdx(idx) {
+    gLineIdx = idx;
 }
 
+function setMemeLineText(txt) {
+    gCurrMeme.lines[gLineIdx].txt = txt;
+}
+
+function setLineArea(lineIdx, dimensions) {
+    gCurrMeme.lines[lineIdx].pos.width = dimensions.width;
+    gCurrMeme.lines[lineIdx].pos.height = dimensions.height;
+}
+
+function setMemeImage(imgId) {
+    gCurrMeme.imgId = imgId;
+}
+
+function setLineFont(fontName) {
+    gCurrMeme.lines[gLineIdx].font = fontName;
+}
+
+function setLineColor(color) {
+    gCurrMeme.lines[gLineIdx].fillColor = color;
+}
+
+function setFontSize(diff) {
+    if (gCurrMeme.lines[gLineIdx].size + diff * FONT_SIZE_JUMPS > MAX_FONT_SIZE ||
+        gCurrMeme.lines[gLineIdx].size + diff * FONT_SIZE_JUMPS < MIN_FONT_SIZE) return;
+    
+    gCurrMeme.lines[gLineIdx].size += diff * FONT_SIZE_JUMPS;
+}
+
+// DELETE .....................................................................
 function deleteLine() {
     if (gLineIdx === -1) return;
     gUndoLine = gCurrMeme.lines.splice(gLineIdx, 1)[0];
     setCurrLineIdx(0);
+}
+
+function undoDelete() {
+    if (gUndoLine) {
+        gCurrMeme.lines.push(gUndoLine);
+        gUndoLine = null;
+    }
 }

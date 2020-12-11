@@ -13,7 +13,7 @@
     <div class="modal hidden-left">
         <div class="modal-top flex space-between align-center">
             <h2 class="mrg-bottom">About Meme Generator v1.0a</h2>
-            <button onclick="onAboutClick()">X</button>
+            <button class="round-corner shadow" onclick="onAboutClick()">X</button>
         </div>
         <p>
             How to use? click on a line, edit it with the buttons on the right or use your keyboard/mouse to move
@@ -27,14 +27,19 @@
         </small>
 
     </div>
+
+
     <header>
         <nav class="top-nav flex space-between align-center mrg-bottom">
             <h1 class="sec-font">MEMEGEN</h1>
             <ul class="clean-list flex fast-transition">
-                <a class="fast-transition" href="#" onclick="onGalleryClick()">
+                <a class="fast-transition round-corner shadow" href="#" onclick="onGalleryClick()">
                     <li>Gallery</li>
                 </a>
-                <a class="fast-transition" href="#" onclick="onAboutClick()">
+                <!-- <a class="fast-transition round-corner shadow" href="#" onclick="onMyMemesClick()">
+                    <li>My Memes</li>
+                </a> -->
+                <a class="fast-transition round-corner shadow" href="#" onclick="onAboutClick()">
                     <li>About</li>
                 </a>
             </ul>
@@ -42,36 +47,51 @@
     </header>
 
     <main class="meme-edit flex space-between mrg-bottom">
-        <div class="meme-image">
-            <canvas id="meme-canvas" width="500" height="500" onclick="" onmousedown="onCanvasMouseDown(event)"
-                onmousemove="onCanvasMouseMove(event)" onmouseup="onCanvasMouseUp(event)">
-                Please don't use IE 3
-            </canvas>
-        </div>
-        <div class="meme-controls flex">
-            <div class="control-row control-top mrg-bottom sec-font darker">
-                Playground
+        <div class="left-side">
+
+            <div class="meme-image rounder-corner shadow mrg-bottom">
+                <canvas class="rounder-corner" id="meme-canvas" width="500" height="500" 
+                    onmousedown="onCanvasMouseDown(event)"
+                    onmousemove="onCanvasMouseMove(event)" 
+                    onmouseup="onCanvasMouseUp(event)"
+                    ondblclick="onCanvasDblClick(event)">
+                    Please don't use IE 3
+                </canvas>
+                
             </div>
-            <div class="control-row mrg-bottom flex space-between">
-                <label for="lineText">Text:</label>
-                <input type="text" name="lineText" id="lineText" oninput="onTextChange(this.value)">
-            </div>
-            <div class="control-row mrg-bottom flex space-between">
-                <button onclick="onFontSize(1)" title="Inc. font Size">A +</button>
-                <button onclick="onFontSize(-1)" title="Dec. font Size">A -</button>
-                <button onclick="onAlignChange('left')" title="to be implemented tommorow">L</button>
-                <button onclick="onAlignChange('center')" title="to be implemented tommorow">C</button>
-                <button onclick="onAlignChange('right')" title="to be implemented tommorow">R</button>
-            </div>
-            <div class="control-row mrg-bottom flex space-between">
-                <select name="fontSelect" id="fontSelect" class="fonts" oninput="onFontSelect(this.value)">
+            <div class="float-bar flex space-between rounder-corner shadow mrg-bottom">
+                <input type="text" name="inlineText" id="inlineText" oninput="onTextChange(this.value)">
+                <select name="fontSelect" id="fontSelect" class="fonts round-corner shadow" oninput="onFontSelect(this.value)">
                     <option value="impact">Impact</option>
                     <option value="arial">Arial</option>
                     <option value="monospace">Monospace</option>
                 </select>
-                <button onclick="onFontFillToggle()" title="to be implemented tommorow">A</button>
-                <input type="color" name="textColor" id="textColor" title="to be implemented tommorow"
-                    onchange="onColorChange(this.value)">
+                <button class="round-corner shadow" onclick="onColorPickerClick()">
+                    COLOR
+                    <div class="color-picker folded-up round-corner shadow">
+                    </div>
+                </button>
+                <button class="round-corner shadow" onclick="onFontSize(1, event)" title="Inc. font Size">A +</button>
+                <button class="round-corner shadow" onclick="onFontSize(-1, event)" title="Dec. font Size">A -</button>
+                <button class="round-corner shadow" onclick="onDeleteLine()" title="Delete this line">Del</button>
+        
+            </div>
+        </div>
+        <div class="meme-controls flex rounder-corner shadow">
+            <div class="control-row control-top mrg-bottom sec-font darker">
+                Playground
+            </div>
+            <!-- <div class="control-row mrg-bottom flex space-between">
+                <label for="lineText">Text:</label>
+                <input type="text" name="lineText" id="lineText" oninput="onTextChange(this.value)">
+            </div> -->
+            <div class="emojis-container">
+                <div class="emoji0 control-row mrg-bottom flex space-around">
+                </div>
+                <div class="emoji1 control-row mrg-bottom flex space-around">
+                </div>
+                <div class="emoji2 control-row mrg-bottom flex space-around">
+                </div>
             </div>
             <div class="control-row mrg-bottom flex space-between">
                 <label for="currLine">Current Line:</label>
@@ -81,13 +101,16 @@
                 <button onclick="onUndoDelete()" title="Restore deleted line">Undo</button>
             </div>
             <div class="control-buttons control-row flex darker">
-                <a href="#" onclick="onDownload(this)" download="" title="Download Meme">Download</a>
-                <a href="#" onclick="" title="to be implemented tommorow">Share</a>
+                <a class="round-corner shadow" href="#" onclick="onDownload(this)" download="" title="Download Meme">Download</a>
+                <a class="round-corner shadow" href="#" onclick="" title="to be implemented tommorow">Share</a>
             </div>
         </div>
     </main>
 
-    <div class="image-gallery hidden-up">
+
+
+    <!-- hidden-up -->
+    <div class="image-gallery hidden-up shadow">
     </div>
 
     <script src="js/meme-service.js"></script>

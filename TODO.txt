@@ -65,19 +65,32 @@ V add CSS transitions to many things
 DAY #3 Missions:
 ================
 V add body onmouseup to stop dragging
-- ^^^ bug on lower part of screen!?!
-- fix font on load bug
+V ^^^ bug on lower part of screen!?!
 V upgrade drag&drop to consider initial click offsetX !!
-- color picker. decide on 8 colors. that's it.
-- keep highlight while editing/dragging
-- fix mobile inputs to prevent still-possible zooming. fewer controls - and bigger.
-- auto focus on line input
-- finalize desktop control box as well. decide on rows, buttons to remove, icons.
+V keep highlight while editing/dragging
 V limit font size
-- add sticker support. just like lines, but with 'gallery' in place.
+V wish list... in-line editing. ---> 
+V color picker. decide on 8 colors. that's it.
+V auto focus on line input
+V floating edit bar
+V beautify css a bit... one-corner round? shadows.
+
+NIGHT #3 Missions:
+==================
+V stickers render
+V CRUDL
+- fix layout with float bar
+- add local storage, get older versions memes
+- create icons
+- check for illegal global calls
+- inline input: esc/enter, if '' => 'enter text'
+- add fonts
+- hide gallery shadow
+- fix mobile inputs to prevent still-possible zooming. fewer controls - and bigger.
+- finalize desktop control box as well. decide on rows, buttons to remove, icons.
 - fucking search.
-- wish list... in-line editing.
-- beautify css a bit... one-corner round? add theme color and more dark/bright sections.
+- add theme color and more dark/bright sections.
+- fix onmouseup onbody bug
 
 
 

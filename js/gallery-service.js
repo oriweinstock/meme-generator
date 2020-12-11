@@ -1,6 +1,7 @@
 'use strict'
 
 var gImgs;
+var gEmojis;
 
 function galleryInit() {
     console.log('Gallery service loaded');
@@ -87,4 +88,16 @@ function createImages() {
 
 function getImagesToDisplay() {
     return gImgs;
+}
+
+// STICKERS ...................................................................
+
+gEmojis = [['😬', '😎', '😅', '😂', '😜', '😵'], ['👍', '👎', '🤟', '💪', '👏', '🖕'], ['🌈', '🔥', '💥', '💡', '🎉', '❤️']];
+
+function getEmojisToDisplay(lineIdx) {
+    return gEmojis[lineIdx];
+}
+
+function getEmojisLineslength() {
+    return gEmojis.length;
 }
