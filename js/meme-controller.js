@@ -7,6 +7,7 @@ var gIsLineHighLighted;
 
 var gMiniCanvases = [];
 var gMiniCtxs = [];
+const EMOJI_SIZE = 60;
 
 // INIT / GENERAL .............................................................
 function controllerInit() {
@@ -15,6 +16,7 @@ function controllerInit() {
     gCtx = gCanvas.getContext('2d');
     gIsLineHighLighted = false;
     renderCanvas();
+    renderEmojiLines();
     renderColorPicker();
     addTouchListeners();
 }
@@ -22,8 +24,8 @@ function controllerInit() {
 // TOP-NAV ....................................................................
 function onGalleryClick() {
     document.querySelector('.image-gallery').classList.toggle('hidden-up');
-    document.querySelector('.meme-edit').classList.toggle('hidden');
-    document.querySelector('.keywords').classList.toggle('hidden');
+    document.querySelector('.keywords').classList.toggle('hidden-tp');
+    document.querySelector('.memes-gallery').classList.add('hidden-up');
 
 }
 
@@ -31,19 +33,9 @@ function onAboutClick() {
     document.querySelector('.modal').classList.toggle('hidden-left');
 }
 
-function onMyMemesClick() {
-    document.querySelector('.memes-gallery').classList.toggle('hidden');
-    document.querySelector('.meme-edit').classList.toggle('hidden');
-    renderMiniCanvases(getSavedMemes());
-}
-function renderColorPicker() {
-    var colors = getColorsToDisplay();
-    var strHtmls = colors.map(color => {
-        return `<div class="color round-corner" data-color="${color}"
-        onclick="onColorClick(this.dataset)" 
-        style="background-color: ${color}"></div>`
-    });
-    document.querySelector('.color-picker').innerHTML = strHtmls.join('');
+function onMyMemesClick(isToRender = true) {
+    document.querySelector('.memes-gallery').classList.toggle('hidden-up');
+    document.querySelector('.image-gallery').classList.add('hidden-up');
 }
 
 // UPDATE .....................................................................
@@ -81,6 +73,16 @@ function onMoveLine(diffX, diffY) {
     renderCanvas();
 }
 
+function renderColorPicker() {
+    var colors = getColorsToDisplay();
+    var strHtmls = colors.map(color => {
+        return `<div class="color round-corner" data-color="${color}"
+        onclick="onColorClick(this.dataset)" 
+        style="background-color: ${color}"></div>`
+    });
+    document.querySelector('.color-picker').innerHTML = strHtmls.join('');
+}
+
 // CREATE .....................................................................
 function onAddLine() {
     var newLine = {
@@ -95,6 +97,40 @@ function onAddLine() {
 
     addLine(newLine);
     renderCanvas();
+}
+
+// EMOJIS .....................................................................
+// Tried 2d map. 1st try was a fail :-)
+function renderEmojiLines() {
+    renderEmojiLine(0);
+    renderEmojiLine(1);
+    renderEmojiLine(2);
+}
+
+function renderEmojiLine(lineIdx = 0) {
+    var emojis = getEmojisToDisplay(lineIdx);
+    var strHtmls = emojis.map(emoji => {
+        return `
+        <div onclick="onEmojiClick(this.innerText)" class="emoji">${emoji}</div>`;
+    });
+    document.querySelector(`.emoji${lineIdx}`).innerHTML = strHtmls.join('');
+}
+
+function onEmojiClick(emoji) {
+    var newLine = {
+        txt: emoji,
+        pos: _getRandomPosOnCanvas(),
+        size: EMOJI_SIZE
+    }
+    addLine(newLine);
+    renderCanvas();
+}
+
+function _getRandomPosOnCanvas() {
+    var canvasSize = getCanvasSize();
+    let x = Math.floor(Math.random() * (canvasSize - EMOJI_SIZE));
+    let y = Math.floor(Math.random() * (canvasSize - EMOJI_SIZE));
+    return { x, y };
 }
 
 // DELETE .....................................................................

@@ -17,7 +17,8 @@
         </div>
         <p>
             New in this version - Introducing Inline-Editing &copy; With a patent-pending Blinking-Cursor.
-            Also be sure check out the new Emoji panel, the gallery filter option and the preset meme gallery. Want to save your own work?
+            Also be sure check out the new Emoji panel, the gallery filter option and the preset meme gallery. Want to
+            save your own work?
             Join our mailing-list or like us on Facebook, and miss no further updates.
 
         </p>
@@ -29,26 +30,13 @@
 
 
     <header>
-        <nav class="top-nav flex space-between align-center mrg-bottom">
+        <nav class="top-nav flex space-between align-center mrg-bottom main-layout">
             <h1 class="sec-font">MEMEGEN</h1>
+
+            <ul class="keywords clean-list flex fast-transition hidden-tp">
+            </ul>
+
             <ul class="clean-list flex fast-transition">
-                <div class="keywords hidden">
-                    <a class="keyword" data-tag="baby" onclick="onTagClick(this.dataset)" href="#">
-                        <li>baby</li>
-                    </a>
-                    <a class="keyword" data-tag="funny" onclick="onTagClick(this.dataset)" href="#">
-                        <li>funny</li>
-                    </a>
-                    <a class="keyword" data-tag="cute" onclick="onTagClick(this.dataset)" href="#">
-                        <li>cute</li>
-                    </a>
-                    <a class="keyword" data-tag="politics" onclick="onTagClick(this.dataset)" href="#">
-                        <li>politics</li>
-                    </a>
-                    <a class="keyword" data-tag="" onclick="onTagClick(this.dataset)" href="#">
-                        <li>ALL</li>
-                    </a>
-                </div>
                 <a class="fast-transition round-corner shadow" href="#" onclick="onGalleryClick()">
                     <li>Gallery</li>
                 </a>
@@ -62,25 +50,24 @@
         </nav>
     </header>
 
-    <main class="meme-edit flex space-between mrg-bottom">
-        <div class="left-side">
+    <main class="meme-edit flex space-between mrg-bottom main-layout">
+        <div class="left-side main-layout">
 
             <div class="meme-image rounder-corner shadow mrg-bottom">
-                <canvas class="rounder-corner" id="meme-canvas" width="500" height="500" 
-                    onmousedown="onCanvasMouseDown(event)"
-                    onmousemove="onCanvasMouseMove(event)" 
-                    onmouseup="onCanvasMouseUp(event)"
-                    ondblclick="onCanvasDblClick(event)">
+                <canvas class="rounder-corner" id="meme-canvas" width="500" height="500"
+                    onmousedown="onCanvasMouseDown(event)" onmousemove="onCanvasMouseMove(event)"
+                    onmouseup="onCanvasMouseUp(event)" ondblclick="onCanvasDblClick(event)">
                     Please don't use IE 3
                 </canvas>
-                
+
             </div>
             <div class="float-bar flex space-between rounder-corner shadow mrg-bottom">
                 <input type="text" name="inlineText" id="inlineText" oninput="onTextChange(this.value)">
-                <select name="fontSelect" id="fontSelect" class="fonts round-corner shadow" oninput="onFontSelect(this.value)">
+                <select name="fontSelect" id="fontSelect" class="fonts round-corner shadow"
+                    oninput="onFontSelect(this.value)">
                     <option value="impact">Impact</option>
                     <option value="arial">Arial</option>
-                    <option value="monospace">Monospace</option>
+                    <option value="cursive">Cursive</option>
                 </select>
                 <button class="round-corner shadow" onclick="onColorPickerClick()">
                     COLOR
@@ -90,7 +77,7 @@
                 <button class="round-corner shadow" onclick="onFontSize(1, event)" title="Inc. font Size">A +</button>
                 <button class="round-corner shadow" onclick="onFontSize(-1, event)" title="Dec. font Size">A -</button>
                 <button class="round-corner shadow" onclick="onDeleteLine()" title="Delete this line">Del</button>
-        
+
             </div>
         </div>
         <div class="meme-controls flex rounder-corner shadow">
@@ -111,11 +98,13 @@
             </div>
             <div class="control-row mrg-bottom flex space-around">
                 <button class="shadow round-corner" onclick="onAddLine()" title="Add a new line">Add Line</button>
-                <button class="shadow round-corner" onclick="onDeleteLine()" title="Delete this line">Delete Line</button>
+                <button class="shadow round-corner" onclick="onDeleteLine()" title="Delete this line">Delete
+                    Line</button>
                 <button class="shadow round-corner" onclick="onUndoDelete()" title="Restore deleted line">Undo</button>
             </div>
             <div class="control-buttons control-row flex darker">
-                <a class="round-corner shadow" href="#" onclick="onDownload(this)" download="" title="Download Meme">Download</a>
+                <a class="round-corner shadow" href="#" onclick="onDownload(this)" download=""
+                    title="Download Meme">Download</a>
                 <a class="round-corner shadow" href="#" onclick="onSave()" title="Save to My-Memes">Save</a>
                 <a class="round-corner shadow" href="#" onclick="" title="to be implemented tommorow">Share</a>
             </div>
@@ -125,15 +114,15 @@
     <div class="image-gallery shadow hidden-up">
     </div>
 
-    <div class="memes-gallery shadow hidden">
+    <div class="memes-gallery shadow hidden-up">
 
     </div>
 
     <script src="js/mango_DB.js"></script>
     <script src="js/meme-service.js"></script>
     <script src="js/meme-controller.js"></script>
-    <script src="js/gallery-service.js"></script>
-    <script src="js/gallery-controller.js"></script>
+    <script src="js/galleries-service.js"></script>
+    <script src="js/galleries-controller.js"></script>
     <script src="js/canvas.js"></script>
     <script src="js/input-handler.js"></script>
 </body>

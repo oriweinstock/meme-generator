@@ -47,12 +47,6 @@ button:hover {
     background-color: #edd;
 }
 
-small {
-    margin-top: 20px;
-    line-height: 1.4;
-    font-weight: bold;
-    display: block;
-}
 .top-nav {
     width: 95vw;
     margin: 0 auto;
@@ -79,6 +73,8 @@ a:hover {
 }
 
 .keywords {
+    z-index: 0;
+    transition: 3.4s;
     margin-inline-end: 2rem;
     display: flex;
 }
@@ -102,6 +98,8 @@ h1 {
     position: relative;
     width: 50vw;
     height: 50vw;
+    max-width: 500px;
+    max-height: 500px;
     background-color: var(--orange);
     touch-action: manipulation;
 
@@ -148,6 +146,7 @@ h1 {
 .emoji:hover {
     transform: scale(1.2);
 }
+
 /* FLOAT BAR */
 .float-bar {
     position: relative;
@@ -174,7 +173,6 @@ h1 {
     transition: z-index 0.8s, transform 0.5s, opacity 0.5s;
 }
 .color:hover {
-    background-color: violet;
     transform: scale(1.1);
 }
 #inlineText {
@@ -183,32 +181,8 @@ h1 {
     width: 0px;
     opacity: 0.0;
 }
-/* IMAGES-GALLERY */
-.image-gallery {
-    position: absolute;
-    top: 90px;
-    width: 90vw;
-    left: 5vw;
-    background-color: var(--orange);
-    display: grid;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-    gap: 10px 10px;
-    grid-template-columns: repeat(auto-fill, minmax(100px, 200px));
-    transition: transform .7s;
-}
-
-.image-gallery img {
-    cursor: pointer;
-    height: 200px;
-    margin-inline-end: 0.5rem;
-    transition: transform .5s;
-}
-.image-gallery img:hover {
-    transform: rotate(5deg);
-}
-/* MEMES-GALLERY */
+/* GALLERIES */
+.image-gallery,
 .memes-gallery {
     position: absolute;
     top: 90px;
@@ -223,11 +197,20 @@ h1 {
     grid-template-columns: repeat(auto-fill, minmax(100px, 200px));
     transition: transform .7s;
 }
+.image-gallery img,
 .saved-meme {
-    background-color: #fff;
-    width: 200px;
+    cursor: pointer;
     height: 200px;
+    margin-inline-end: 0.5rem;
+    transition: transform .5s;
 }
+.image-gallery img:hover {
+    transform: rotate(5deg);
+}
+.saved-meme:hover {
+    transform: scale(1.06);
+}
+
 /* MODAL */
 .modal {
     position: fixed;
@@ -254,6 +237,12 @@ h1 {
 .modal p::first-letter { 
     font-weight: bold;
     font-size: 1.3rem;
+}
+small {
+    margin-top: 20px;
+    line-height: 1.4;
+    font-weight: bold;
+    display: block;
 }
 
 /* HELPERS */
@@ -300,6 +289,15 @@ h1 {
     transform: translateX(-100%);
     left: 0px;
 }
+
+.hidden-tp {
+    display: none;
+    z-index: -1;
+    opacity: 0.0;
+    background-color: yellow;
+    /* transform: translateX(-100%); */
+}
+
 .hidden {
     visibility: hidden;
 }
@@ -338,6 +336,7 @@ select {
     src: url(../fonts/impactreg.woff) format('woff');
 }
 
+
 /* TABLET */
 @media (max-width: 720px) {
     .meme-edit {
@@ -348,6 +347,8 @@ select {
         margin: 0px auto 10px auto;
         width: 83.3333vw;
         height: 83.3333vw;
+        max-width: unset;
+        max-height: unset;
     }
     .meme-controls {
         width: 83.3333vw;

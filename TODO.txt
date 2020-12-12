@@ -45,7 +45,7 @@ V QA !
 Stage #4 - Extra funcs:
 -----------------------
 V add help modal
-v- implement text formatting #2 (color, stroke, align)
+X implement text formatting #2 (color, stroke, align)
 V additional keyboard shortcuts (+/-/esc/ctrl-z)
 V show/hide images gallery
 V render image gallery
@@ -81,16 +81,21 @@ V stickers render
 V CRUDL
 V fix layout with float bar
 V add local storage, get older versions memes
+V fucking search.
+V update about section
+
+DAY #4 Missions:
+================
+V refactor/clean up
+V check for illegal global calls
+V add fonts
 - create icons
-- check for illegal global calls
 - inline input: esc/enter, if '' => 'enter text'
-- update about section
-- add fonts
 - fix mobile inputs to prevent still-possible zooming. fewer controls - and bigger.
 - finalize desktop control box as well. decide on rows, buttons to remove, icons.
-V fucking search.
 - add theme color and more dark/bright sections.
 - fix onmouseup onbody bug
+- fix selecting current meme doesn't load the 'saved one'
 
 
 

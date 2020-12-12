@@ -50,12 +50,16 @@ const COLORS = [
     '#bfffff',
     '#96ff89'
 ];
+
 const STORAGE_KEY = 'memes';
 var gMemes = [];
 var gCurrMeme;
+var gKeywords = ['funny', 'cute', 'politics', 'dogs', 'baby'];
 
-var gCanvasWidth = 500;
-var gCanvasHeight = 500;
+const gEmojis = [['😬', '😎', '😅', '😂', '😜', '😵'], ['👍', '👎', '🤟', '💪', '👏', '🖕'], ['🌈', '🔥', '💥', '💡', '🎉', '❤️']];
+
+var gCanvasBaseWidth = 500;
+var gCanvasBaseHeight = 500;
 
 var gUndoLine;
 var gLineIdx = 0;   // meme.selectedLineIdx is useless. no reason to store it within the object, it is just for editing 1 meme
@@ -104,17 +108,29 @@ function getColorsToDisplay() {
 }
 
 function getCanvasSize() {
-    return gCanvasWidth;
+    return gCanvasBaseWidth;
 }
 
 function getSavedMemes() {
     return gMemes;
 }
 
+function getKeywords() {
+    return gKeywords;
+}
+function getEmojisToDisplay(lineIdx) {
+    return gEmojis[lineIdx];
+}
+
+function getEmojisLineslength() {
+    return gEmojis.length;
+}
+
 // UPDATE ....................................................................
 function setCurrMeme(index) {
     gCurrMeme = gMemes[index];
 }
+
 function moveLine(diffX, diffY, mousePos) {
     let pos = gCurrMeme.lines[gLineIdx].pos;
 
@@ -124,8 +140,8 @@ function moveLine(diffX, diffY, mousePos) {
         return;
     }
 
-    if (pos.x + diffX < 0 || pos.x + pos.width + diffX > gCanvasWidth) return;
-    if (pos.y - pos.height + diffY < 0 || pos.y + diffY > gCanvasHeight) return;
+    if (pos.x + diffX < 0 || pos.x + pos.width + diffX > gCanvasBaseWidth) return;
+    if (pos.y - pos.height + diffY < 0 || pos.y + diffY > gCanvasBaseHeight) return;
     pos.x += diffX;
     pos.y += diffY;
 }

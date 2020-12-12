@@ -45,9 +45,7 @@ function onCanvasMouseMove(ev) {
     if (!gMouseDown) return;
     let mousePos = _getCorrectOffsets(ev);
     mousePos.x = mousePos.x + gDragOffsetX;
-
-    moveLine(null, null, mousePos);
-    gIsInlineEdit = false;
+    moveLine(null, null, mousePos);     // null is for the 'keyboard move X/Y'
     renderCanvas();
 }
 
@@ -60,7 +58,6 @@ function onCanvasMouseUp(ev) {
 }
 
 function onCanvasDblClick(ev) { // inline editing
-    console.log('mouse dbl clicked');
     gIsInlineEdit = true;
     gBlinkTimer = setInterval(() => {
         gIsCursorBlink = !gIsCursorBlink;
@@ -87,7 +84,30 @@ function setInlineEditFocus() {
 }
 
 // DRAW .......................................................................
-function highLightCurrLine() {
+// Main Canvas (default) || small canvases
+function renderCanvas(canvas = gCanvas, ctx = gCtx, meme = gCurrMeme) {
+    var img = new Image();
+    img.src = `img/${meme.imgId}.jpg`
+    img.onload = () => {
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height)
+        meme.lines.forEach((line, index) => {
+            ctx.lineWidth = line.strokeWidth;
+            ctx.fillStyle = line.fillColor;
+            ctx.strokeStyle = line.strokeColor;
+            ctx.font = `normal 700 ${line.size}px ${line.font}`;
+            ctx.fillText(line.txt, line.pos.x, line.pos.y);
+            ctx.strokeText(line.txt, line.pos.x, line.pos.y);
+
+            setLineArea(index, {   // can cause a harmless bug on memes gallery. to be fixed.
+                width: ctx.measureText(line.txt).width,
+                height: line.size
+            });
+        });
+        highLightCurrLine();
+    }
+}
+
+function highLightCurrLine() {      // 
     if (gIsNoneSelected) return;
     let line = getCurrLineIdx();
     let pos = gCurrMeme.lines[line].pos;
@@ -110,13 +130,14 @@ function highLightCurrLine() {
         gCtx.closePath();
         if (!gIsCursorBlink) gCtx.stroke();
     } else {
+        // draw surrounding rect
         gCtx.rect(pos.x - 10, pos.y + 10, pos.width + 15, (-1 * pos.height) - 10);
         gCtx.stroke();
     }
 }
 
-// MEMES GALLERY
-function renderMiniCanvases(memes) {
+// MEMES GALLERY ..............................................................
+function renderSavedMemes(memes) {
     var strHtmls = memes.map((meme, index) => {
         return `<div class="saved-meme">
                 <canvas class="rounder-corner" onclick="onSavedMemeClick(${index})"
@@ -135,50 +156,6 @@ function renderMiniCanvases(memes) {
     })
 }
 
-function onSavedMemeClick(index) {
-    setCurrMeme(index);
-    renderCanvas();
-    onMyMemesClick();
-}
-
-// MAIN CANVAS
-function renderCanvas(canvas = gCanvas, ctx = gCtx, meme = gCurrMeme) {
-    var img = new Image();
-    img.src = `img/${meme.imgId}.jpg`
-    img.onload = () => {
-        ctx.drawImage(img, 0, 0, canvas.width, canvas.height)
-        meme.lines.forEach((line, index) => {
-            ctx.lineWidth = line.strokeWidth;
-            ctx.fillStyle = line.fillColor;
-            ctx.strokeStyle = line.strokeColor;
-            ctx.font = `normal 400 ${line.size}px ${line.font}`;
-            ctx.fillText(line.txt, line.pos.x, line.pos.y);
-            ctx.strokeText(line.txt, line.pos.x, line.pos.y);
-
-            setLineArea(index, {
-                width: gCtx.measureText(line.txt).width,
-                height: line.size
-            });
-        });
-        highLightCurrLine();
-    }
-}
-
-function renderCanvasLine(line, index) {
-    gCtx.lineWidth = line.strokeWidth;
-    gCtx.fillStyle = line.fillColor;
-    gCtx.strokeStyle = line.strokeColor;
-    gCtx.font = `normal 400 ${line.size}px ${line.font}`;
-    gCtx.fillText(line.txt, line.pos.x, line.pos.y);
-    gCtx.strokeText(line.txt, line.pos.x, line.pos.y);
-
-    // set current meme line dimensions to capture correct pixels
-    setLineArea(index, {
-        width: gCtx.measureText(line.txt).width,
-        height: line.size
-    });
-}
-
 // UTILS ......................................................................
 function _addResizeListener() {
     addEventListener('resize', () => {
@@ -189,15 +166,16 @@ function _addResizeListener() {
 
 function _resizeCanvas() {
     let windowWidth = window.innerWidth;
-    let canvasSize;
+    let canvasResize;
 
     // numbers based on 'px' media queries
-    if (windowWidth > 720) canvasSize = windowWidth / 2;
-    else if (windowWidth > 500) canvasSize = windowWidth / 1.2;
-    else canvasSize = windowWidth / 1.04;
+    if (windowWidth >= 1000) canvasResize = 500;
+    else if (windowWidth > 720) canvasResize = windowWidth / 2;
+    else if (windowWidth > 500) canvasResize = windowWidth / 1.2;
+    else canvasResize = windowWidth / 1.04;
 
-    gCanvas.style.width = canvasSize + 'px';
-    gCanvas.style.height = canvasSize + 'px';
+    gCanvas.style.width = canvasResize + 'px';
+    gCanvas.style.height = canvasResize + 'px';
 }
 
 function _getClickedLineByPos(clickPos) {
