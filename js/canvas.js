@@ -8,6 +8,7 @@ var gIsNoneSelected = true;
 
 // Handle inline editing
 var gIsInlineEdit = false;
+var gLineBeforeEdit = '';
 var gIsCursorBlink = true;
 var gBlinkTimer;
 const BLINK_TIME = 400;
@@ -36,7 +37,7 @@ function onCanvasMouseDown(ev) {
 
     gDragOffsetX = _getDragOffsetX(mousePos.x);
     mousePos.x += gDragOffsetX;
-    gBeforeDragPosition = mousePos;
+    gBeforeDragPosition = mousePos; // fallback for releasing mouse outside canvas
 
     renderCanvas();
 }
@@ -77,10 +78,26 @@ function onBodyMouseUp(ev) {    // avoid non-ending drags
 // INLINE EDIT ................................................................
 function setInlineEditFocus() {
     var txt = getCurrLineTxt();
+    gLineBeforeEdit = txt;  // for escape-undo behaviour
     document.querySelector('[name="inlineText"]').value = txt;
     var elInlineTxt = document.querySelector('[name="inlineText"]');
     elInlineTxt.focus();
     elInlineTxt.scrollLeft = elInlineTxt.scrollWidth;
+}
+
+function setInlineCursorToStart() {
+    var elInlineTxt = document.querySelector('[name="inlineText"]');
+    elInlineTxt.focus();
+    elInlineTxt.scrollLeft = 0;
+}
+
+function stopInlineEdit(isToUndo = false) {
+    gIsInlineEdit = false;
+    if (isToUndo) {
+        setMemeLineText(gLineBeforeEdit);
+        gLineBeforeEdit = '';
+    }
+    renderCanvas();
 }
 
 // DRAW .......................................................................

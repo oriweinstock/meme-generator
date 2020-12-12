@@ -38,14 +38,13 @@ V media query for basic page layout (on top / aside)
 V navbar
 V format controls
 V toggle view: image gallery / edit mode
-- improve image gallery. cards with labels / used count
 V QA !
-- VERSION 1.0
+V VERSION 1.0
 
 Stage #4 - Extra funcs:
 -----------------------
 V add help modal
-X implement text formatting #2 (color, stroke, align)
+X implement text formatting #2 (color, stroke, align). No thanks. Good enough :-)
 V additional keyboard shortcuts (+/-/esc/ctrl-z)
 V show/hide images gallery
 V render image gallery
@@ -58,7 +57,7 @@ V on init: go to first line to write
 V REFACTORING SPRINT :-)
 - add 'mouse is still down' for buttons
 V add drag and Drop
-V fix layout. fuck it.
+V fix layout
 V start gallery search
 V add CSS transitions to many things
 
@@ -70,7 +69,7 @@ V upgrade drag&drop to consider initial click offsetX !!
 V keep highlight while editing/dragging
 V limit font size
 V wish list... in-line editing. ---> 
-V color picker. decide on 8 colors. that's it.
+V color picker. decide on 8 colors. that's it
 V auto focus on line input
 V floating edit bar
 V beautify css a bit... one-corner round? shadows.
@@ -81,40 +80,21 @@ V stickers render
 V CRUDL
 V fix layout with float bar
 V add local storage, get older versions memes
-V fucking search.
+V fucking search
 V update about section
+V better color picker
 
 DAY #4 Missions:
 ================
 V refactor/clean up
 V check for illegal global calls
 V add fonts
-- create icons
-- inline input: esc/enter, if '' => 'enter text'
-- fix mobile inputs to prevent still-possible zooming. fewer controls - and bigger.
-- finalize desktop control box as well. decide on rows, buttons to remove, icons.
-- add theme color and more dark/bright sections.
-- fix onmouseup onbody bug
-- fix selecting current meme doesn't load the 'saved one'
-
-
-
-
-HISTORY:
-Stage #5 - Bonuses:
--------------------
-- better color picker
-- save / download / share menu
-- build gImgs model for search/labels.
-- build gKeywords and fill it with data
-- add search input
-- implement search
-- visualize search history
-- QA !
-- Version 1.1
-
-Stage #6 - More Bonuses:
-------------------------
-- add Web Share API
-- add Hebrew Support
-- upload image from browser
+V build gImgs model for search/labels
+V build gKeywords and fill it with data
+V inline input: enter/escape, if '' => 'enter text'
+V create icons
+V Give up to hamburger menu on mobile... :(
+V finalize desktop control box as well. decide on rows, buttons to remove, icons
+- fix mobile inputs to prevent still-possible zooming
+- add theme color and more dark/bright sections
+- fix selecting current meme doesn't load the 'saved one'...?

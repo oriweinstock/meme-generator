@@ -1,6 +1,6 @@
 'use strict'
 
-function galleryControllerInit() {
+function galleriesControllerInit() {
     console.log('Gallery controller loaded');
     renderImagesGallery();
     renderKeywords();
@@ -11,7 +11,7 @@ function renderImagesGallery() {
     var imgs = getImagesToDisplay();
     var strHtmls = imgs.map(img => {
         return `
-        <img class="rounder-corner shadow" src="img/${img.id}.jpg"
+        <img class="rounder-corner pointer shadow" src="img/${img.id}.jpg"
         alt="image-${img.id}" data-img-id="${img.id}" 
         onclick="onImageClick(this)">`;
     });
@@ -24,8 +24,8 @@ function onImageClick(img) {
     onGalleryClick();
 }
 
-function onFilterClick(dataset) {
-    setFilter(dataset.tag);
+function onFilterClick(filterBy) {
+    setFilter(filterBy);
     renderImagesGallery();
 }
 
@@ -36,11 +36,13 @@ function onSavedMemeClick(index) {
 }
 
 function renderKeywords() { // change this.dataset
-    var words = getKeywords();
-    var strHtmls = words.map(word => {
-        return `<a class="keyword" data-tag="${word}"
-                onclick="onFilterClick(this.dataset)" ref="#">
-                    <li>${word}</li>`
+    var keywords = getKeywords();
+    var strHtmls = keywords.map(keyword => {
+        var txtClass = (keyword.word === 'ALL') ? 'keyword-all shadow' : 'text-shadow';
+        return `<a class="keyword ${txtClass} flex align-center pointer fast-transition" 
+                style="font-size: ${getKeywordCount(keyword)}px"
+                onclick="onFilterClick('${keyword.word}')" ref="#">
+                    <li>${keyword.word}</li></a>`
     });
     document.querySelector('.keywords').innerHTML = strHtmls.join('');
 }

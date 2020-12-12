@@ -6,7 +6,6 @@
     Almost a fully functional version, 1/3-responsive...
     Line needed to be selected in order to manipulate it.
     Don't forget to read the about section :-)
-    C'ya!
 
     Version 0.9
     ------------
@@ -24,7 +23,7 @@
     - Font load (almost) for Safari w/o Impact
     
     Version 1.0b
-    ------------
+    -------------
     - Inline editing with a shiny blinking cursor
     - Brand new editing panel with custom color picker
     - Emoji panel for even more fun
@@ -32,6 +31,14 @@
     - Saved memes gallery with the same renderCanvas function. yaaaay
     - Gallery filter 1st stage
     - ... and many more fixes and clean ups
+
+    Version 1.0RC
+    --------------
+    - Inline edit upgrade. Enter/Escape support (Escape undo edit)
+    - Gallery filter by tag
+    - Mobile Menu, Content max-width, Hiding buttons for better layout, CSS 138 fixes
+    - known issue #1: increase font size can restrict keyboard movement if passes canvas borders. 1 hour to deliver. we'll see.
+    - known issue #2: selecting 'current' meme from meme gallery acts weird. 45 minutes to deliver :-)
 */
 
 // GLOBALS / CONSTS ...........................................................
@@ -51,38 +58,39 @@ const COLORS = [
     '#96ff89'
 ];
 
-const STORAGE_KEY = 'memes';
 var gMemes = [];
 var gCurrMeme;
-var gKeywords = ['funny', 'cute', 'politics', 'dogs', 'baby'];
-
-const gEmojis = [['😬', '😎', '😅', '😂', '😜', '😵'], ['👍', '👎', '🤟', '💪', '👏', '🖕'], ['🌈', '🔥', '💥', '💡', '🎉', '❤️']];
+var gKeywords;
+var gEmojis;
 
 var gCanvasBaseWidth = 500;
 var gCanvasBaseHeight = 500;
 
 var gUndoLine;
-var gLineIdx = 0;   // meme.selectedLineIdx is useless. no reason to store it within the object, it is just for editing 1 meme
+var gCurrLineIdx = 0;   // meme.selectedLineIdx is useless. no reason to store it within the object, it is just for editing 1 meme
 
 // INIT .......................................................................
 function onServiceInit() {
     console.log('Meme service loaded');
     _createMemes();
+    gKeywords = getKeywordsFromDatabase();
+    gEmojis = getEmojisFromDatabase();
     controllerInit();
-    galleryInit();
+    galleriesInit();
     canvasInit();
 }
 
 // CREATE .....................................................................
 function _createMemes() {
-    let memes = loadFromStorage(STORAGE_KEY);
+    // let memes = loadFromStorage(STORAGE_KEY); // TBD
+    let memes = '';
     if (!memes || !memes.length) {
         memes = [];
         memes = getMemesFromDatabase();
     }
 
     gMemes = memes;
-    gCurrMeme = gMemes[2];
+    gCurrMeme = gMemes[3];
 }
 
 function addLine(newLine) {
@@ -92,15 +100,15 @@ function addLine(newLine) {
 
 // READ .......................................................................
 function getCurrLineIdx() {
-    return gLineIdx;
+    return gCurrLineIdx;
 }
 
 function getCurrLinePos() {
-    return gCurrMeme.lines[gLineIdx].pos;
+    return gCurrMeme.lines[gCurrLineIdx].pos;
 }
 
 function getCurrLineTxt() {
-    return gCurrMeme.lines[gLineIdx].txt;
+    return gCurrMeme.lines[gCurrLineIdx].txt;
 }
 
 function getColorsToDisplay() {
@@ -118,6 +126,10 @@ function getSavedMemes() {
 function getKeywords() {
     return gKeywords;
 }
+
+function getKeywordCount(keyword) {
+    return keyword.count;
+}
 function getEmojisToDisplay(lineIdx) {
     return gEmojis[lineIdx];
 }
@@ -132,14 +144,14 @@ function setCurrMeme(index) {
 }
 
 function moveLine(diffX, diffY, mousePos) {
-    let pos = gCurrMeme.lines[gLineIdx].pos;
+    let pos = gCurrMeme.lines[gCurrLineIdx].pos;
 
     if (mousePos) {
         pos.x = mousePos.x;
         pos.y = mousePos.y;
         return;
     }
-
+    // Keyboard movement
     if (pos.x + diffX < 0 || pos.x + pos.width + diffX > gCanvasBaseWidth) return;
     if (pos.y - pos.height + diffY < 0 || pos.y + diffY > gCanvasBaseHeight) return;
     pos.x += diffX;
@@ -147,14 +159,18 @@ function moveLine(diffX, diffY, mousePos) {
 }
 
 function setCurrLineIdx(idx) {
-    gLineIdx = idx;
+    gCurrLineIdx = idx;
 }
 
 function setMemeLineText(txt) {
-    gCurrMeme.lines[gLineIdx].txt = txt;
+    if (txt.length === 0) {
+        txt = '...';
+        setInlineCursorToStart();
+    }
+    gCurrMeme.lines[gCurrLineIdx].txt = txt;
 }
 
-function setLineArea(lineIdx, dimensions) {
+function setLineArea(lineIdx, dimensions) { // put ctx line co-ordinates in model
     gCurrMeme.lines[lineIdx].pos.width = dimensions.width;
     gCurrMeme.lines[lineIdx].pos.height = dimensions.height;
 }
@@ -164,24 +180,26 @@ function setMemeImage(imgId) {
 }
 
 function setLineFont(fontName) {
-    gCurrMeme.lines[gLineIdx].font = fontName;
+    gCurrMeme.lines[gCurrLineIdx].font = fontName;
 }
 
 function setLineColor(color) {
-    gCurrMeme.lines[gLineIdx].fillColor = color;
+    gCurrMeme.lines[gCurrLineIdx].fillColor = color;
 }
 
 function setFontSize(diff) {
-    if (gCurrMeme.lines[gLineIdx].size + diff * FONT_SIZE_JUMPS > MAX_FONT_SIZE ||
-        gCurrMeme.lines[gLineIdx].size + diff * FONT_SIZE_JUMPS < MIN_FONT_SIZE) return;
+    let size = gCurrMeme.lines[gCurrLineIdx].size;
+
+    if (size + diff * FONT_SIZE_JUMPS > MAX_FONT_SIZE ||
+        size + diff * FONT_SIZE_JUMPS < MIN_FONT_SIZE) return;
     
-    gCurrMeme.lines[gLineIdx].size += diff * FONT_SIZE_JUMPS;
+    gCurrMeme.lines[gCurrLineIdx].size += diff * FONT_SIZE_JUMPS;
 }
 
 // DELETE .....................................................................
 function deleteLine() {
-    if (gLineIdx === -1) return;
-    gUndoLine = gCurrMeme.lines.splice(gLineIdx, 1)[0];
+    if (gCurrLineIdx === -1) return;
+    gUndoLine = gCurrMeme.lines.splice(gCurrLineIdx, 1)[0];
     setCurrLineIdx(0);
 }
 
@@ -193,10 +211,4 @@ function undoDelete() {
 }
 
 // STORAGE SERVICE ............................................................
-function saveToStorage(key, val) {
-    localStorage.setItem(key, JSON.stringify(val));
-}
-
-function loadFromStorage(key) {
-    return JSON.parse(localStorage.getItem(key));
-}
+// To be developed ............................................................

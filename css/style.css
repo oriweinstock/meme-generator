@@ -22,40 +22,14 @@ header {
     width: 100vw;
 }
 
-label {
-    font-size: 1rem;
-    padding-top: 5px;
-}
-
-button, input, select {
-    text-transform: uppercase;
-    background-color: #fff;
-    border: none;
-    outline: none;
-    padding: 5px 8px;
-}
-
-button {
-    cursor: pointer;
-    font-weight: bold;
-    margin-inline-end: 5px;
-    min-width: 30px;
-    transition: background-color 0.2s;
-}
-
-button:hover {
-    background-color: #edd;
-}
-
-.top-nav {
-    width: 95vw;
-    margin: 0 auto;
-    height: 10vh;
-    padding: 10px;
+h1 {
+    font-size: 1.8rem;
+    color: white;
+    margin: 0;
+    padding: 5px;
 }
 
 a {
-    /* display: block; */
     background-color: #fff;
     padding: 5px 8px;
     margin-inline-end: 10px;
@@ -72,26 +46,76 @@ a:hover {
     background-color: #edd;
 }
 
+button, input, select {
+    text-transform: uppercase;
+    font-size: 1rem;
+    background-color: #fff;
+    color: #322;
+    border: none;
+    outline: none;
+    padding: 6px 8px;
+    min-width: 50px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+button:hover,
+select:hover {
+    background-color: #edd;
+}
+
+label {
+    font-size: 1rem;
+    padding-top: 5px;
+}
+
+.main-content {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.top-nav {
+    margin: 0 auto;
+    height: 10vh;
+    padding: 10px;
+}
+
+.hamburger {
+    display: none;
+    background-color: var(--orange);
+    color: white;
+    position: fixed;
+    right: 20px;
+    font-weight: bold;
+    font-size: 2rem;
+}
+
 .keywords {
     z-index: 0;
     transition: 3.4s;
     margin-inline-end: 2rem;
     display: flex;
 }
-
-.keyword a {
+.keyword {
+    background-color: var(--orange);
     display: inline;
-}
-h1 {
-    font-size: 1.8rem;
     color: white;
-    margin: 0;
-    padding: 5px;
+}
+.keyword:hover {
+    transform: scale(1.1);
+    background-color: initial;    
+}
+.keyword-all {
+    background-color: #fff;
+    color: var(--orange);
+}
+.keyword-all:hover {
+    background-color: #ddd;
 }
 
 .meme-edit {
-    width: 95vw;
-    margin: 0 auto;
+    margin: 20px auto;
 }
 
 .meme-image {
@@ -100,9 +124,7 @@ h1 {
     height: 50vw;
     max-width: 500px;
     max-height: 500px;
-    background-color: var(--orange);
     touch-action: manipulation;
-
 }
 
 #meme-canvas {
@@ -112,16 +134,15 @@ h1 {
 }
 
 .meme-controls {
-    align-self: center;
-    width: 43vw;
+    margin-top: 15px;
+    align-self: flex-start;
+    width: 44%;
     background-color: var(--orange);
     padding: 0.6rem;
     color: white;
-    font-weight: bold;
     flex-direction: column;
     justify-content: space-evenly;
 }
-
 .control-row {
     padding: 10px 0px;
     border-bottom: 2px solid rgb(253, 101, 0);
@@ -132,19 +153,22 @@ h1 {
     border-bottom: none;
 }
 .control-buttons {
+    font-size: 1.1rem;
     justify-content: space-evenly;
     align-items: center;
     width: 100%;
-    margin: 0 auto;
     border-bottom: none;
 }
 .emoji {
-    cursor: pointer;
     font-size: 2rem;
-    transition: transform 0.3s;
 }
 .emoji:hover {
     transform: scale(1.2);
+}
+
+body.open-gallery .logo {
+    position: fixed;
+    left: -1000px;
 }
 
 /* FLOAT BAR */
@@ -161,7 +185,7 @@ h1 {
     width: 20vw;
     height: 10vw;
     left: 10vw;
-    top: 60px;
+    top: -60px;
     display: grid;
     padding: 3px;
     grid-template-columns: repeat(4, 1fr);
@@ -181,6 +205,7 @@ h1 {
     width: 0px;
     opacity: 0.0;
 }
+
 /* GALLERIES */
 .image-gallery,
 .memes-gallery {
@@ -199,7 +224,6 @@ h1 {
 }
 .image-gallery img,
 .saved-meme {
-    cursor: pointer;
     height: 200px;
     margin-inline-end: 0.5rem;
     transition: transform .5s;
@@ -255,13 +279,12 @@ small {
     list-style-type: none;
     margin: 0;
 }
-
+.pointer { cursor: pointer;}
+.disabled { cursor: not-allowed;}
 .darker {
     background-color: rgba(0, 0, 0, 0.1);
 }
 .sec-font {
-    /* font-family: _impact; */
-
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     letter-spacing: 0.3rem;
     text-transform: uppercase;
@@ -279,23 +302,25 @@ small {
     -moz-box-shadow:    3px 2px 6px 0px rgba(65, 55, 50, 0.81);
     box-shadow:         3px 2px 6px 0px rgba(65, 55, 50, 0.81);
 }
+.text-shadow {
+    text-shadow: 3px 2px 6px rgba(65, 55, 50, 0.81);
+}
 
 /* HIDERS */
 .hidden-up {
     transform: translateY(-100%);
-    top: 0px;
+    top: -300px;
 }
 .hidden-left {
     transform: translateX(-100%);
     left: 0px;
 }
 
-.hidden-tp {
+.hidden-top {
     display: none;
     z-index: -1;
     opacity: 0.0;
     background-color: yellow;
-    /* transform: translateX(-100%); */
 }
 
 .hidden {
@@ -328,17 +353,16 @@ select {
     -moz-appearance: none;
     -webkit-appearance: none;
 }
-/* FONTS */
-@font-face {
-    font-family: _impact;
-    src: url(../fonts/impactreg.ttf) format('trutype');
-    src: url(../fonts/impactreg.eot) format('embedded-open-type');
-    src: url(../fonts/impactreg.woff) format('woff');
-}
 
 
 /* TABLET */
 @media (max-width: 720px) {
+    .top-nav {
+        margin-inline-end: 20px;
+    }
+    body.open-gallery .main-nav {
+        display: none;
+    }
     .meme-edit {
         flex-direction: column;
         width: 83.3333vw;
@@ -357,6 +381,27 @@ select {
 } 
 /* MOBILE */
 @media (max-width: 500px) {
+    .main-nav {
+        background-color: var(--orange);
+        position: fixed;
+        z-index: 2;
+        top: -800px;
+        right: 0px;
+        flex-direction: column;
+        transition: top .6s;
+    }
+    body.open-menu .main-nav {
+        top: 80px;
+    }
+    ul {
+        padding-inline-start: 0px;
+    }
+    .main-nav a {
+        padding: 10px;
+        width: 180px;
+        margin: 20px 10px;
+    }
+
     .meme-edit {
         flex-direction: column;
         width: 96.1538vw;
@@ -370,13 +415,38 @@ select {
         width: 96.1538vw;
         margin: 0 auto;
     }
+
     .image-gallery {
         grid-template-columns: repeat(auto-fill, minmax(100px, 150px));
     }
     .image-gallery img {
         height: 150px;
     }
+
     .modal {
         width: 350px;
+    }
+    .color-picker {
+        width: 70vw;
+        height: 20vw;
+    }
+    .hamburger {
+        display: block;
+    }
+    .top-nav {
+        height: 70px;
+    }
+
+    .keywords {
+        background-color: var(--orange);
+        z-index: 2;
+        position: fixed;
+        left: 5vw;
+        width: 90vw;
+        top: 80px;
+        width: 90%;
+    }
+    .keywords a {
+        padding: 5px;
     }
 }

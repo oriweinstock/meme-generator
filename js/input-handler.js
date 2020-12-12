@@ -26,9 +26,14 @@ function handleKeyboard(ev) {
             break;
         case 'Escape':
             document.querySelector('.modal').classList.add('hidden');
+            stopInlineEdit(true);   // true -> undo edit. TBD.
             break;
         case 'z':
             if (ev.ctrlKey) onUndoDelete();
+            break;
+        case 'Enter':
+            stopInlineEdit();
+            break;
         default:
             prevent = false;
             break;

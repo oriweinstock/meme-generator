@@ -24,18 +24,25 @@ function controllerInit() {
 // TOP-NAV ....................................................................
 function onGalleryClick() {
     document.querySelector('.image-gallery').classList.toggle('hidden-up');
-    document.querySelector('.keywords').classList.toggle('hidden-tp');
+    document.querySelector('.keywords').classList.toggle('hidden-top');
     document.querySelector('.memes-gallery').classList.add('hidden-up');
-
+    document.body.classList.remove('open-menu');   
+    document.body.classList.toggle('open-gallery');   
 }
 
 function onAboutClick() {
     document.querySelector('.modal').classList.toggle('hidden-left');
+    document.body.classList.remove('open-menu');   
 }
 
 function onMyMemesClick(isToRender = true) {
     document.querySelector('.memes-gallery').classList.toggle('hidden-up');
     document.querySelector('.image-gallery').classList.add('hidden-up');
+    document.body.classList.remove('open-menu');
+}
+
+function onHamburger() {
+    document.body.classList.toggle('open-menu');
 }
 
 // UPDATE .....................................................................
@@ -76,7 +83,7 @@ function onMoveLine(diffX, diffY) {
 function renderColorPicker() {
     var colors = getColorsToDisplay();
     var strHtmls = colors.map(color => {
-        return `<div class="color round-corner" data-color="${color}"
+        return `<div class="color round-corner fast-transition" data-color="${color}"
         onclick="onColorClick(this.dataset)" 
         style="background-color: ${color}"></div>`
     });
@@ -111,7 +118,7 @@ function renderEmojiLine(lineIdx = 0) {
     var emojis = getEmojisToDisplay(lineIdx);
     var strHtmls = emojis.map(emoji => {
         return `
-        <div onclick="onEmojiClick(this.innerText)" class="emoji">${emoji}</div>`;
+        <div onclick="onEmojiClick(this.innerText)" class="emoji pointer fast-transition">${emoji}</div>`;
     });
     document.querySelector(`.emoji${lineIdx}`).innerHTML = strHtmls.join('');
 }

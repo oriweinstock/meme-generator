@@ -3,13 +3,13 @@
 var gImgs;
 var gFilterBy = '';
 
-function galleryInit() {
+function galleriesInit() {
     console.log('Gallery service loaded');
-    createImages();
-    galleryControllerInit();
+    _createImages();
+    galleriesControllerInit();
 }
 
-function createImages() {
+function _createImages() {
     gImgs = getImagesFromDatabase();
 }
 
@@ -22,5 +22,5 @@ function getImagesToDisplay() {
 }
 
 function setFilter(filterBy) {
-    gFilterBy = filterBy;
+    gFilterBy = (filterBy === 'ALL') ? '' : filterBy;
 }

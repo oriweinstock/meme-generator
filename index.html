@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
     <title>Mister Meme</title>
 </head>
 
@@ -12,7 +13,7 @@
 
     <div class="modal hidden-left">
         <div class="modal-top flex space-between align-center">
-            <h2 class="mrg-bottom">About Meme Generator v1.0b</h2>
+            <h2 class="mrg-bottom">About Meme Generator v1.0RC</h2>
             <button class="round-corner shadow" onclick="onAboutClick()">X</button>
         </div>
         <p>
@@ -30,13 +31,13 @@
 
 
     <header>
-        <nav class="top-nav flex space-between align-center mrg-bottom main-layout">
-            <h1 class="sec-font">MEMEGEN</h1>
+        <nav class="main-content top-nav flex space-between align-center mrg-bottom">
+            <h1 class="logo sec-font pointer text-shadow" onclick="onAboutClick()">MEMEGEN</h1>
 
-            <ul class="keywords clean-list flex fast-transition hidden-tp">
+            <ul class="keywords clean-list flex fast-transition hidden-top">
             </ul>
 
-            <ul class="clean-list flex fast-transition">
+            <ul class="main-nav clean-list flex fast-transition">
                 <a class="fast-transition round-corner shadow" href="#" onclick="onGalleryClick()">
                     <li>Gallery</li>
                 </a>
@@ -47,75 +48,91 @@
                     <li>About</li>
                 </a>
             </ul>
+            <button class="hamburger pointer" onclick="onHamburger()">&#9776</button>
+
         </nav>
     </header>
 
-    <main class="meme-edit flex space-between mrg-bottom main-layout">
-        <div class="left-side main-layout">
+    <div class="main-content">
 
-            <div class="meme-image rounder-corner shadow mrg-bottom">
-                <canvas class="rounder-corner" id="meme-canvas" width="500" height="500"
-                    onmousedown="onCanvasMouseDown(event)" onmousemove="onCanvasMouseMove(event)"
-                    onmouseup="onCanvasMouseUp(event)" ondblclick="onCanvasDblClick(event)">
-                    Please don't use IE 3
-                </canvas>
+        <main class="meme-edit flex space-around mrg-bottom">
+            <div class="left-side">
 
+                <div class="meme-image rounder-corner shadow mrg-bottom">
+                    <canvas class="rounder-corner" id="meme-canvas" width="500" height="500"
+                        onmousedown="onCanvasMouseDown(event)" onmousemove="onCanvasMouseMove(event)"
+                        onmouseup="onCanvasMouseUp(event)" ondblclick="onCanvasDblClick(event)">
+                        Please don't use IE 3
+                    </canvas>
+
+                </div>
+                
+                <div class="float-bar flex space-between rounder-corner shadow mrg-bottom">
+                    <input type="text" name="inlineText" id="inlineText" oninput="onTextChange(this.value)">
+                    <select name="fontSelect" id="fontSelect" class="fonts round-corner shadow"
+                        oninput="onFontSelect(this.value)">
+                        <option value="impact">Impact</option>
+                        <option value="arial">Arial</option>
+                        <option value="cursive">Cursive</option>
+                    </select>
+                    <button class="round-corner shadow" onclick="onColorPickerClick()">
+                        🖌
+                        <div class="color-picker folded-up round-corner shadow">
+                        </div>
+                    </button>
+                    <button class="round-corner shadow" onclick="onFontSize(1, event)" title="Inc. font Size">A
+                        +</button>
+                    <button class="round-corner shadow" onclick="onFontSize(-1, event)" title="Dec. font Size">A
+                        -</button>
+                    <button class="round-corner shadow" onclick="onDeleteLine()" title="Delete this line">🗑</button>
+
+                </div>
             </div>
-            <div class="float-bar flex space-between rounder-corner shadow mrg-bottom">
-                <input type="text" name="inlineText" id="inlineText" oninput="onTextChange(this.value)">
-                <select name="fontSelect" id="fontSelect" class="fonts round-corner shadow"
-                    oninput="onFontSelect(this.value)">
-                    <option value="impact">Impact</option>
-                    <option value="arial">Arial</option>
-                    <option value="cursive">Cursive</option>
-                </select>
-                <button class="round-corner shadow" onclick="onColorPickerClick()">
-                    COLOR
-                    <div class="color-picker folded-up round-corner shadow">
+
+            <div class="meme-controls flex rounder-corner shadow">
+                <div class="control-row control-top mrg-bottom sec-font darker text-shadow">
+                    Playground
+                </div>
+                <div class="emojis-container">
+                    <div class="emoji0 control-row mrg-bottom flex space-around">
                     </div>
-                </button>
-                <button class="round-corner shadow" onclick="onFontSize(1, event)" title="Inc. font Size">A +</button>
-                <button class="round-corner shadow" onclick="onFontSize(-1, event)" title="Dec. font Size">A -</button>
-                <button class="round-corner shadow" onclick="onDeleteLine()" title="Delete this line">Del</button>
+                    <div class="emoji1 control-row mrg-bottom flex space-around">
+                    </div>
+                    <div class="emoji2 control-row mrg-bottom flex space-around">
+                    </div>
+                </div>
+                <div class="control-row mrg-bottom flex space-around">
+                    <button class="shadow round-corner" onclick="onAddLine()" title="Add a new line">
+                        Add Line
+                    </button>
+                    <button class="shadow round-corner" onclick="onDeleteLine()" title="Delete this line">
+                        Delete Line
+                    </button>
+                    <button class="shadow round-corner" onclick="onUndoDelete()" title="Restore deleted line">
+                        Undo
+                    </button>
+                </div>
+                <div class="control-buttons control-row flex darker">
+                    <a class="round-corner shadow" href="#" onclick="onDownload(this)" download="" title="Download Meme">
+                        Download
+                    </a>
+                    <a class="round-corner shadow disabled" href="#" onclick="onSave()" title="Save to My-Memes">
+                        Save
+                    </a>
+                    <a class="round-corner shadow disabled" href="#" onclick="" title="to be implemented tommorow">
+                        Share
+                    </a>
+                </div>
+            </div>
 
-            </div>
-        </div>
-        <div class="meme-controls flex rounder-corner shadow">
-            <div class="control-row control-top mrg-bottom sec-font darker">
-                Playground
-            </div>
-            <!-- <div class="control-row mrg-bottom flex space-between">
-                <label for="lineText">Text:</label>
-                <input type="text" name="lineText" id="lineText" oninput="onTextChange(this.value)">
-            </div> -->
-            <div class="emojis-container">
-                <div class="emoji0 control-row mrg-bottom flex space-around">
-                </div>
-                <div class="emoji1 control-row mrg-bottom flex space-around">
-                </div>
-                <div class="emoji2 control-row mrg-bottom flex space-around">
-                </div>
-            </div>
-            <div class="control-row mrg-bottom flex space-around">
-                <button class="shadow round-corner" onclick="onAddLine()" title="Add a new line">Add Line</button>
-                <button class="shadow round-corner" onclick="onDeleteLine()" title="Delete this line">Delete
-                    Line</button>
-                <button class="shadow round-corner" onclick="onUndoDelete()" title="Restore deleted line">Undo</button>
-            </div>
-            <div class="control-buttons control-row flex darker">
-                <a class="round-corner shadow" href="#" onclick="onDownload(this)" download=""
-                    title="Download Meme">Download</a>
-                <a class="round-corner shadow" href="#" onclick="onSave()" title="Save to My-Memes">Save</a>
-                <a class="round-corner shadow" href="#" onclick="" title="to be implemented tommorow">Share</a>
-            </div>
-        </div>
-    </main>
+        </main>
+
+    </div>
 
     <div class="image-gallery shadow hidden-up">
     </div>
 
     <div class="memes-gallery shadow hidden-up">
-
     </div>
 
     <script src="js/mango_DB.js"></script>
@@ -125,6 +142,7 @@
     <script src="js/galleries-controller.js"></script>
     <script src="js/canvas.js"></script>
     <script src="js/input-handler.js"></script>
+
 </body>
 
 </html>
