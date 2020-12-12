@@ -21,8 +21,13 @@ function renderGallery() {
 
 function onImageClick(img) {
     setMemeImage(+img.dataset.imgId);
-    renderCanvas(gCurrMeme);
+    renderCanvas();
     onGalleryClick();
+}
+
+function onTagClick(dataset) {
+    setFilter(dataset.tag);
+    renderGallery();
 }
 
 // Tried 2d map. 1st try was a fail :-)

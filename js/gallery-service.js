@@ -2,6 +2,7 @@
 
 var gImgs;
 var gEmojis;
+var gFilterBy = '';
 
 function galleryInit() {
     console.log('Gallery service loaded');
@@ -13,83 +14,90 @@ function createImages() {
     gImgs = [
         {
             id: 1,
-            keywords: ['funny']
+            keywords: ['politics', 'funny', 'actors']
         },
         {
             id: 2,
-            keywords: ['funny']
+            keywords: ['dogs', 'cute', 'love']
         },
         {
             id: 3,
-            keywords: ['funny']
+            keywords: ['baby', 'dogs', 'sleepy', 'cute']
         },
         {
             id: 4,
-            keywords: ['funny']
+            keywords: ['cats', 'sleepy', 'computers']
         },
         {
             id: 5,
-            keywords: ['funny']
+            keywords: ['baby', 'politic']
         },
         {
             id: 6,
-            keywords: ['funny']
+            keywords: ['funny', 'sleepy', 'high']
         },
         {
             id: 7,
-            keywords: ['funny']
+            keywords: ['baby', 'funny', 'high']
         },
         {
             id: 8,
-            keywords: ['funny']
+            keywords: ['funny', 'high', 'actors']
         },
         {
             id: 9,
-            keywords: ['funny']
+            keywords: ['funny', 'baby', 'high']
         },
         {
             id: 10,
-            keywords: ['funny']
+            keywords: ['funny', 'politics']
         },
         {
             id: 11,
-            keywords: ['funny']
+            keywords: ['cute', 'love']
         },
         {
             id: 12,
-            keywords: ['funny']
+            keywords: ['funny', 'actors', 'awe']
         },
         {
             id: 13,
-            keywords: ['funny']
+            keywords: ['funny', 'actors']
         },
         {
             id: 14,
-            keywords: ['funny']
+            keywords: ['actors', 'awe']
         },
         {
             id: 15,
-            keywords: ['funny']
+            keywords: ['politics', 'actors']
         },
         {
             id: 16,
-            keywords: ['funny']
+            keywords: ['funny', 'actors']
         },
         {
             id: 17,
-            keywords: ['funny']
+            keywords: ['politics']
         },
         {
             id: 18,
-            keywords: ['funny']
+            keywords: ['funny', 'awe']
         }
     ];
 }
 
 function getImagesToDisplay() {
-    return gImgs;
+    if (!gFilterBy) return gImgs;
+    var imgs = gImgs.filter(img => {
+        return (img.keywords.includes(gFilterBy));
+    });
+    return imgs;
 }
 
+function setFilter(filterBy) {
+    gFilterBy = filterBy;
+}
 // STICKERS ...................................................................
 
 gEmojis = [['😬', '😎', '😅', '😂', '😜', '😵'], ['👍', '👎', '🤟', '💪', '👏', '🖕'], ['🌈', '🔥', '💥', '💡', '🎉', '❤️']];

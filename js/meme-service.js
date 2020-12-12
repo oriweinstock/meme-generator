@@ -22,7 +22,16 @@
     - Welcome TOUCH-HANDLER :-)
     - CSS animations
     - Font load (almost) for Safari w/o Impact
-    - 
+    
+    Version 1.0b
+    ------------
+    - Inline editing with a shiny blinking cursor
+    - Brand new editing panel with custom color picker
+    - Emoji panel for even more fun
+    - Improved design with much more depth
+    - Saved memes gallery with the same renderCanvas function. yaaaay
+    - Gallery filter 1st stage
+    - ... and many more fixes and clean ups
 */
 
 // GLOBALS / CONSTS ...........................................................
@@ -41,6 +50,9 @@ const COLORS = [
     '#bfffff',
     '#96ff89'
 ];
+const STORAGE_KEY = 'memes';
+var gMemes = [];
+var gCurrMeme;
 
 var gCanvasWidth = 500;
 var gCanvasHeight = 500;
@@ -50,38 +62,24 @@ var gLineIdx = 0;   // meme.selectedLineIdx is useless. no reason to store it wi
 
 // INIT .......................................................................
 function onServiceInit() {
-    console.log('Meme Service Loaded.');
+    console.log('Meme service loaded');
+    _createMemes();
     controllerInit();
     galleryInit();
     canvasInit();
 }
 
 // CREATE .....................................................................
-var gCurrMeme = {
-    imgId: 6,
-    // selectedLineIdx: 0, // USELESS !! 
+function _createMemes() {
+    let memes = loadFromStorage(STORAGE_KEY);
+    if (!memes || !memes.length) {
+        memes = [];
+        memes = getMemesFromDatabase();
+    }
 
-    lines: [
-        {
-            txt: '2nd sprint | DAY #2',
-            font: 'impact',
-            pos: { x: 30, y: 70, width: 310, height: 420 },
-            size: 50,
-            strokeWidth: 2,
-            strokeColor: '#000000',
-            fillColor: '#FFFFFF'
-        },
-        {
-            txt: 'MOBILE...',
-            font: 'impact',
-            pos: { x: 94, y: 410, width: 190, height: 490 },
-            size: 70,
-            strokeWidth: 2,
-            strokeColor: '#000000',
-            fillColor: 'yellow'
-        }
-    ]
-};
+    gMemes = memes;
+    gCurrMeme = gMemes[2];
+}
 
 function addLine(newLine) {
     gCurrMeme.lines.push(newLine);
@@ -109,7 +107,14 @@ function getCanvasSize() {
     return gCanvasWidth;
 }
 
+function getSavedMemes() {
+    return gMemes;
+}
+
 // UPDATE ....................................................................
+function setCurrMeme(index) {
+    gCurrMeme = gMemes[index];
+}
 function moveLine(diffX, diffY, mousePos) {
     let pos = gCurrMeme.lines[gLineIdx].pos;
 
@@ -169,4 +174,13 @@ function undoDelete() {
         gCurrMeme.lines.push(gUndoLine);
         gUndoLine = null;
     }
+}
+
+// STORAGE SERVICE ............................................................
+function saveToStorage(key, val) {
+    localStorage.setItem(key, JSON.stringify(val));
+}
+
+function loadFromStorage(key) {
+    return JSON.parse(localStorage.getItem(key));
 }

@@ -59,7 +59,7 @@ V REFACTORING SPRINT :-)
 - add 'mouse is still down' for buttons
 V add drag and Drop
 V fix layout. fuck it.
-- start gallery search
+V start gallery search
 V add CSS transitions to many things
 
 DAY #3 Missions:
@@ -79,16 +79,16 @@ NIGHT #3 Missions:
 ==================
 V stickers render
 V CRUDL
-- fix layout with float bar
-- add local storage, get older versions memes
+V fix layout with float bar
+V add local storage, get older versions memes
 - create icons
 - check for illegal global calls
 - inline input: esc/enter, if '' => 'enter text'
+- update about section
 - add fonts
-- hide gallery shadow
 - fix mobile inputs to prevent still-possible zooming. fewer controls - and bigger.
 - finalize desktop control box as well. decide on rows, buttons to remove, icons.
-- fucking search.
+V fucking search.
 - add theme color and more dark/bright sections.
 - fix onmouseup onbody bug
 

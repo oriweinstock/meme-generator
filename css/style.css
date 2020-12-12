@@ -61,7 +61,7 @@ small {
 }
 
 a {
-    display: block;
+    /* display: block; */
     background-color: #fff;
     padding: 5px 8px;
     margin-inline-end: 10px;
@@ -78,6 +78,14 @@ a:hover {
     background-color: #edd;
 }
 
+.keywords {
+    margin-inline-end: 2rem;
+    display: flex;
+}
+
+.keyword a {
+    display: inline;
+}
 h1 {
     font-size: 1.8rem;
     color: white;
@@ -134,7 +142,7 @@ h1 {
 }
 .emoji {
     cursor: pointer;
-    font-size: 1.6rem;
+    font-size: 2rem;
     transition: transform 0.3s;
 }
 .emoji:hover {
@@ -175,7 +183,7 @@ h1 {
     width: 0px;
     opacity: 0.0;
 }
-/* GALLERY */
+/* IMAGES-GALLERY */
 .image-gallery {
     position: absolute;
     top: 90px;
@@ -200,7 +208,26 @@ h1 {
 .image-gallery img:hover {
     transform: rotate(5deg);
 }
-
+/* MEMES-GALLERY */
+.memes-gallery {
+    position: absolute;
+    top: 90px;
+    width: 90vw;
+    left: 5vw;
+    background-color: var(--orange);
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    gap: 10px 10px;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 200px));
+    transition: transform .7s;
+}
+.saved-meme {
+    background-color: #fff;
+    width: 200px;
+    height: 200px;
+}
 /* MODAL */
 .modal {
     position: fixed;
@@ -221,11 +248,12 @@ h1 {
     text-decoration: underline;
 }
 .modal p {
+    font-size: 0.9rem;
     line-height: 1.4rem;
 }
 .modal p::first-letter { 
     font-weight: bold;
-    font-size: 1.7rem;
+    font-size: 1.3rem;
 }
 
 /* HELPERS */

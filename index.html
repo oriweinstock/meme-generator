@@ -12,20 +12,19 @@
 
     <div class="modal hidden-left">
         <div class="modal-top flex space-between align-center">
-            <h2 class="mrg-bottom">About Meme Generator v1.0a</h2>
+            <h2 class="mrg-bottom">About Meme Generator v1.0b</h2>
             <button class="round-corner shadow" onclick="onAboutClick()">X</button>
         </div>
         <p>
-            How to use? click on a line, edit it with the buttons on the right or use your keyboard/mouse to move
-            around.
-            This version is mobile friendly. Join our newsletter to receive product updates regulary.
+            New in this version - Introducing Inline-Editing &copy; With a patent-pending Blinking-Cursor.
+            Also be sure check out the new Emoji panel, the gallery filter option and the preset meme gallery. Want to save your own work?
+            Join our mailing-list or like us on Facebook, and miss no further updates.
+
         </p>
-        Press 'Escape' or the 'X' button to close this modal.
 
         <small>
-            ** Did you know? Safari doesn't have IMPACT font! hence a safari-bug to be fixed later.
+            ** Did you know? too many colors is just too many
         </small>
-
     </div>
 
 
@@ -33,12 +32,29 @@
         <nav class="top-nav flex space-between align-center mrg-bottom">
             <h1 class="sec-font">MEMEGEN</h1>
             <ul class="clean-list flex fast-transition">
+                <div class="keywords hidden">
+                    <a class="keyword" data-tag="baby" onclick="onTagClick(this.dataset)" href="#">
+                        <li>baby</li>
+                    </a>
+                    <a class="keyword" data-tag="funny" onclick="onTagClick(this.dataset)" href="#">
+                        <li>funny</li>
+                    </a>
+                    <a class="keyword" data-tag="cute" onclick="onTagClick(this.dataset)" href="#">
+                        <li>cute</li>
+                    </a>
+                    <a class="keyword" data-tag="politics" onclick="onTagClick(this.dataset)" href="#">
+                        <li>politics</li>
+                    </a>
+                    <a class="keyword" data-tag="" onclick="onTagClick(this.dataset)" href="#">
+                        <li>ALL</li>
+                    </a>
+                </div>
                 <a class="fast-transition round-corner shadow" href="#" onclick="onGalleryClick()">
                     <li>Gallery</li>
                 </a>
-                <!-- <a class="fast-transition round-corner shadow" href="#" onclick="onMyMemesClick()">
+                <a class="fast-transition round-corner shadow" href="#" onclick="onMyMemesClick()">
                     <li>My Memes</li>
-                </a> -->
+                </a>
                 <a class="fast-transition round-corner shadow" href="#" onclick="onAboutClick()">
                     <li>About</li>
                 </a>
@@ -93,26 +109,27 @@
                 <div class="emoji2 control-row mrg-bottom flex space-around">
                 </div>
             </div>
-            <div class="control-row mrg-bottom flex space-between">
-                <label for="currLine">Current Line:</label>
-                <input type="number" name="currLine" id="currLine">
-                <button onclick="onAddLine()" title="Add a new line">Add</button>
-                <button onclick="onDeleteLine()" title="Delete this line">Del</button>
-                <button onclick="onUndoDelete()" title="Restore deleted line">Undo</button>
+            <div class="control-row mrg-bottom flex space-around">
+                <button class="shadow round-corner" onclick="onAddLine()" title="Add a new line">Add Line</button>
+                <button class="shadow round-corner" onclick="onDeleteLine()" title="Delete this line">Delete Line</button>
+                <button class="shadow round-corner" onclick="onUndoDelete()" title="Restore deleted line">Undo</button>
             </div>
             <div class="control-buttons control-row flex darker">
                 <a class="round-corner shadow" href="#" onclick="onDownload(this)" download="" title="Download Meme">Download</a>
+                <a class="round-corner shadow" href="#" onclick="onSave()" title="Save to My-Memes">Save</a>
                 <a class="round-corner shadow" href="#" onclick="" title="to be implemented tommorow">Share</a>
             </div>
         </div>
     </main>
 
-
-
-    <!-- hidden-up -->
-    <div class="image-gallery hidden-up shadow">
+    <div class="image-gallery shadow hidden-up">
     </div>
 
+    <div class="memes-gallery shadow hidden">
+
+    </div>
+
+    <script src="js/mango_DB.js"></script>
     <script src="js/meme-service.js"></script>
     <script src="js/meme-controller.js"></script>
     <script src="js/gallery-service.js"></script>

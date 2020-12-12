@@ -5,9 +5,12 @@ var gCanvas;
 var gCtx;
 var gIsLineHighLighted;
 
+var gMiniCanvases = [];
+var gMiniCtxs = [];
+
 // INIT / GENERAL .............................................................
 function controllerInit() {
-    console.log('Meme Controller Loaded.');
+    console.log('Meme controller loaded');
     gCanvas = document.querySelector('#meme-canvas');
     gCtx = gCanvas.getContext('2d');
     gIsLineHighLighted = false;
@@ -20,12 +23,19 @@ function controllerInit() {
 function onGalleryClick() {
     document.querySelector('.image-gallery').classList.toggle('hidden-up');
     document.querySelector('.meme-edit').classList.toggle('hidden');
+    document.querySelector('.keywords').classList.toggle('hidden');
+
 }
 
 function onAboutClick() {
     document.querySelector('.modal').classList.toggle('hidden-left');
 }
 
+function onMyMemesClick() {
+    document.querySelector('.memes-gallery').classList.toggle('hidden');
+    document.querySelector('.meme-edit').classList.toggle('hidden');
+    renderMiniCanvases(getSavedMemes());
+}
 function renderColorPicker() {
     var colors = getColorsToDisplay();
     var strHtmls = colors.map(color => {
@@ -98,9 +108,13 @@ function onUndoDelete() {
     renderCanvas();
 }
 
-// ACTIONS ....................................................................
+// BOTTOM BUTTONS .............................................................
 function onDownload(elLink) {
     const data = gCanvas.toDataURL('image/jpeg');
     elLink.href = data;
     elLink.download = 'meme.jpg';
+}
+
+function onSave() {
+    console.log(JSON.stringify(gCurrMeme));
 }

@@ -13,7 +13,7 @@ var gBlinkTimer;
 const BLINK_TIME = 400;
 
 function canvasInit() {
-    console.log('Canvas module loaded.')
+    console.log('Canvas module loaded')
     _addResizeListener();
     _resizeCanvas();
 }
@@ -23,7 +23,7 @@ function onCanvasMouseDown(ev) {
     gMouseDown = true;
     clearInterval(gBlinkTimer);
     let mousePos = _getCorrectOffsets(ev);
-    
+
     let clickedLine = _getClickedLineByPos(mousePos);
     if (clickedLine === -1) {
         gIsNoneSelected = true;
@@ -33,11 +33,11 @@ function onCanvasMouseDown(ev) {
     }
     gIsNoneSelected = false;
     setCurrLineIdx(clickedLine);
-    
+
     gDragOffsetX = _getDragOffsetX(mousePos.x);
     mousePos.x += gDragOffsetX;
     gBeforeDragPosition = mousePos;
-    
+
     renderCanvas();
 }
 
@@ -45,7 +45,7 @@ function onCanvasMouseMove(ev) {
     if (!gMouseDown) return;
     let mousePos = _getCorrectOffsets(ev);
     mousePos.x = mousePos.x + gDragOffsetX;
-    
+
     moveLine(null, null, mousePos);
     gIsInlineEdit = false;
     renderCanvas();
@@ -104,8 +104,8 @@ function highLightCurrLine() {
         gCtx.stroke();
         // draw cursor
         gCtx.beginPath();
-        gCtx.strokeStyle =  'white';
-        gCtx.moveTo(pos.x + pos.width,  pos.y + 20);
+        gCtx.strokeStyle = 'white';
+        gCtx.moveTo(pos.x + pos.width, pos.y + 20);
         gCtx.lineTo(pos.x + pos.width, pos.y - pos.height);
         gCtx.closePath();
         if (!gIsCursorBlink) gCtx.stroke();
@@ -115,18 +115,53 @@ function highLightCurrLine() {
     }
 }
 
-function renderCanvas() {
-    var img = new Image();
-    img.src = `img/${gCurrMeme.imgId}.jpg`
-    img.onload = () => {
-        gCtx.drawImage(img, 0, 0, gCanvas.width, gCanvas.height)
-        renderCanvasLines();
-        highLightCurrLine();
-    }
+// MEMES GALLERY
+function renderMiniCanvases(memes) {
+    var strHtmls = memes.map((meme, index) => {
+        return `<div class="saved-meme">
+                <canvas class="rounder-corner" onclick="onSavedMemeClick(${index})"
+                id="saved-meme${index}" width="500" height="500">
+                </canvas>
+                </div>`
+    });
+    document.querySelector('.memes-gallery').innerHTML = strHtmls.join('');
+    memes.forEach((meme, index) => {
+        gMiniCanvases[index] = document.querySelector(`#saved-meme${index}`);
+        gMiniCtxs[index] = gMiniCanvases[index].getContext('2d');
+    
+        gMiniCanvases[index].style.width = '200px';
+        gMiniCanvases[index].style.height = '200px';
+        renderCanvas(gMiniCanvases[index], gMiniCtxs[index], meme);
+    })
 }
 
-function renderCanvasLines() {
-    gCurrMeme.lines.forEach((line, index) => renderCanvasLine(line, index));
+function onSavedMemeClick(index) {
+    setCurrMeme(index);
+    renderCanvas();
+    onMyMemesClick();
+}
+
+// MAIN CANVAS
+function renderCanvas(canvas = gCanvas, ctx = gCtx, meme = gCurrMeme) {
+    var img = new Image();
+    img.src = `img/${meme.imgId}.jpg`
+    img.onload = () => {
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height)
+        meme.lines.forEach((line, index) => {
+            ctx.lineWidth = line.strokeWidth;
+            ctx.fillStyle = line.fillColor;
+            ctx.strokeStyle = line.strokeColor;
+            ctx.font = `normal 400 ${line.size}px ${line.font}`;
+            ctx.fillText(line.txt, line.pos.x, line.pos.y);
+            ctx.strokeText(line.txt, line.pos.x, line.pos.y);
+
+            setLineArea(index, {
+                width: gCtx.measureText(line.txt).width,
+                height: line.size
+            });
+        });
+        highLightCurrLine();
+    }
 }
 
 function renderCanvasLine(line, index) {
@@ -144,10 +179,6 @@ function renderCanvasLine(line, index) {
     });
 }
 
-// FLOAT-BAR ..................................................................
-function renderFloatBar() {
-    document.querySelector('.float-bar').classList.remove('hidden');
-}
 // UTILS ......................................................................
 function _addResizeListener() {
     addEventListener('resize', () => {
@@ -185,7 +216,7 @@ function _getCorrectOffsets(ev) {
 
 function _getDragOffsetX(posX) {
     let linePos = getCurrLinePos();
-    return linePos.x - posX; 
+    return linePos.x - posX;
 }
 
 function _getCanvasRatio() {
