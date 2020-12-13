@@ -22,5 +22,10 @@ function getImagesToDisplay() {
 }
 
 function setFilter(filterBy) {
+    console.log('setting filter to', filterBy)
     gFilterBy = (filterBy === 'ALL') ? '' : filterBy;
+}
+
+function incFilterCount(filter) {
+    console.log('TBD');
 }

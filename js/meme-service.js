@@ -1,46 +1,5 @@
 'use strict'
 
-/*  Version 0.8
-    ------------
-
-    Almost a fully functional version, 1/3-responsive...
-    Line needed to be selected in order to manipulate it.
-    Don't forget to read the about section :-)
-
-    Version 0.9
-    ------------
-    - Drag & Drop for lines
-    - Click on line works much better
-    - A line is always selected. also on startup.
-    - Major clean up / refactor
-    - Controls design upgrade
-    - Fixed layout problems on different widths
-
-    Version 1.0a
-    -------------
-    - Welcome TOUCH-HANDLER :-)
-    - CSS animations
-    - Font load (almost) for Safari w/o Impact
-    
-    Version 1.0b
-    -------------
-    - Inline editing with a shiny blinking cursor
-    - Brand new editing panel with custom color picker
-    - Emoji panel for even more fun
-    - Improved design with much more depth
-    - Saved memes gallery with the same renderCanvas function. yaaaay
-    - Gallery filter 1st stage
-    - ... and many more fixes and clean ups
-
-    Version 1.0RC
-    --------------
-    - Inline edit upgrade. Enter/Escape support (Escape undo edit)
-    - Gallery filter by tag
-    - Mobile Menu, Content max-width, Hiding buttons for better layout, CSS 138 fixes
-    - known issue #1: increase font size can restrict keyboard movement if passes canvas borders. 1 hour to deliver. we'll see.
-    - known issue #2: selecting 'current' meme from meme gallery acts weird. 45 minutes to deliver :-)
-*/
-
 // GLOBALS / CONSTS ...........................................................
 const DEFAULT_FONT = 'impact';
 const DEFAULT_SIZE = 40;
@@ -73,6 +32,9 @@ var gCurrLineIdx = 0;   // meme.selectedLineIdx is useless. no reason to store i
 function onServiceInit() {
     console.log('Meme service loaded');
     _createMemes();
+    setCurrMeme(4);
+    setCurrLineIdx(0);
+
     gKeywords = getKeywordsFromDatabase();
     gEmojis = getEmojisFromDatabase();
     controllerInit();
@@ -88,9 +50,7 @@ function _createMemes() {
         memes = [];
         memes = getMemesFromDatabase();
     }
-
     gMemes = memes;
-    gCurrMeme = gMemes[3];
 }
 
 function addLine(newLine) {
@@ -171,6 +131,7 @@ function setMemeLineText(txt) {
 }
 
 function setLineArea(lineIdx, dimensions) { // put ctx line co-ordinates in model
+    console.log(lineIdx)
     gCurrMeme.lines[lineIdx].pos.width = dimensions.width;
     gCurrMeme.lines[lineIdx].pos.height = dimensions.height;
 }
@@ -197,6 +158,19 @@ function setFontSize(diff) {
 }
 
 // DELETE .....................................................................
+function clearLines() {
+    gCurrMeme.lines = [{
+        txt: 'Enter something...',
+        font: 'impact',
+        pos: { x: 100, y: 50, width: 310, height: 420 },
+        size: 40,
+        strokeWidth: 3,
+        strokeColor: '#000000',
+        fillColor: '#FFFFFF'
+    }];
+    setCurrLineIdx(0);
+}
+
 function deleteLine() {
     if (gCurrLineIdx === -1) return;
     gUndoLine = gCurrMeme.lines.splice(gCurrLineIdx, 1)[0];

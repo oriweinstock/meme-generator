@@ -34,6 +34,13 @@ function handleKeyboard(ev) {
         case 'Enter':
             stopInlineEdit();
             break;
+        case 'Backspace':
+            if (gIsInlineEdit) {
+                prevent = false;
+                break;
+            }
+            onDeleteLine();
+            break;
         default:
             prevent = false;
             break;

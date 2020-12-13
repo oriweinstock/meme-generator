@@ -21,28 +21,39 @@ function renderImagesGallery() {
 function onImageClick(img) {
     setMemeImage(+img.dataset.imgId);
     renderCanvas();
-    onGalleryClick();
+    document.body.classList.remove('open-gallery');
+    document.querySelector('.image-gallery').classList.add('hidden-up');
+    document.querySelector('.keywords').classList.toggle('hidden-top');
+
+    // onGalleryClick();
 }
 
 function onFilterClick(filterBy) {
     setFilter(filterBy);
+    incFilterCount(filterBy);
+    renderKeywords();
     renderImagesGallery();
 }
 
 function onSavedMemeClick(index) {
+    document.body.classList.remove('open-memes');
+    document.querySelector('.memes-gallery').classList.add('hidden-up');
+
     setCurrMeme(index);
-    onMyMemesClick();
     renderCanvas();
 }
 
 function renderKeywords() { // change this.dataset
-    var keywords = getKeywords();
+    var keywords = getKeywordsFromDatabase();
     var strHtmls = keywords.map(keyword => {
         var txtClass = (keyword.word === 'ALL') ? 'keyword-all shadow' : 'text-shadow';
         return `<a class="keyword ${txtClass} flex align-center pointer fast-transition" 
-                style="font-size: ${getKeywordCount(keyword)}px"
-                onclick="onFilterClick('${keyword.word}')" ref="#">
-                    <li>${keyword.word}</li></a>`
+                style="font-size: ${Object.values(keyword)}px"
+                onclick="onFilterClick('${Object.keys(keyword)}')" ref="#">
+                    <li>${Object.keys(keyword)}</li></a>`
     });
+    strHtmls.push(`<a class="keyword-all shadow flex align-center pointer fast-transition"
+                    onclick="onFilterClick('ALL')" ref="#">
+                        <li>ALL</li></a>`);
     document.querySelector('.keywords').innerHTML = strHtmls.join('');
 }

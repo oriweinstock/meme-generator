@@ -6,45 +6,48 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
     <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
-    <title>Mister Meme</title>
+    <title>iMEME 2000</title>
 </head>
 
 <body onkeydown="handleKeyboard(event)" onload="onServiceInit()" onmouseup="onBodyMouseUp(event)">
 
-    <div class="modal hidden-left">
+    <div class="modal hidden-left rounder-corner shadow">
         <div class="modal-top flex space-between align-center">
-            <h2 class="mrg-bottom">About Meme Generator v1.0RC</h2>
+            <h2 class="mrg-bottom">Meme Generator v1.00</h2>
             <button class="round-corner shadow" onclick="onAboutClick()">X</button>
         </div>
+        <ul class="help clean-list">
+            <li>Edit text: Double-click</li>
+            <li>Move line: Drag & Drop</li>
+            <li>Delete line: Backspace</li>
+            <li>Ctrl-Z to undo delete</li>
+        </ul>
         <p>
-            New in this version - Introducing Inline-Editing &copy; With a patent-pending Blinking-Cursor.
-            Also be sure check out the new Emoji panel, the gallery filter option and the preset meme gallery. Want to
-            save your own work?
+            New in this version - Clear all content, darker screen on modals (you should see it right now), better layout for all devices.
             Join our mailing-list or like us on Facebook, and miss no further updates.
-
         </p>
 
         <small>
-            ** Did you know? too many colors is just too many
+            ** Did you know? too many colors is just too many. Just press the color picker...
         </small>
     </div>
 
 
     <header>
-        <nav class="main-content top-nav flex space-between align-center mrg-bottom">
-            <h1 class="logo sec-font pointer text-shadow" onclick="onAboutClick()">MEMEGEN</h1>
+        <nav class="main-content top-nav flex space-between align-center">
+            <h1 class="logo pointer text-shadow" onclick="onAboutClick()">iMEME 2000</h1>
 
             <ul class="keywords clean-list flex fast-transition hidden-top">
             </ul>
 
             <ul class="main-nav clean-list flex fast-transition">
-                <a class="fast-transition round-corner shadow" href="#" onclick="onGalleryClick()">
+                <a class="btn-gallery fast-transition round-corner shadow" href="#" onclick="onGalleryClick()">
                     <li>Gallery</li>
                 </a>
-                <a class="fast-transition round-corner shadow" href="#" onclick="onMyMemesClick()">
+                <a class="btn-memes fast-transition round-corner shadow" href="#" onclick="onMyMemesClick()">
                     <li>My Memes</li>
                 </a>
-                <a class="fast-transition round-corner shadow" href="#" onclick="onAboutClick()">
+                <a class="btn-about btn-cta fast-transition round-corner shadow" href="#" onclick="onAboutClick()">
                     <li>About</li>
                 </a>
             </ul>
@@ -53,12 +56,13 @@
         </nav>
     </header>
 
+    <div class="main-screen" onclick="onMainScreenClick()"></div>
     <div class="main-content">
 
         <main class="meme-edit flex space-around mrg-bottom">
             <div class="left-side">
 
-                <div class="meme-image rounder-corner shadow mrg-bottom">
+                <div class="canvas-div rounder-corner shadow mrg-bottom">
                     <canvas class="rounder-corner" id="meme-canvas" width="500" height="500"
                         onmousedown="onCanvasMouseDown(event)" onmousemove="onCanvasMouseMove(event)"
                         onmouseup="onCanvasMouseUp(event)" ondblclick="onCanvasDblClick(event)">
@@ -88,7 +92,7 @@
 
                 </div>
             </div>
-
+            
             <div class="meme-controls flex rounder-corner shadow">
                 <div class="control-row control-top mrg-bottom sec-font darker text-shadow">
                     Playground
@@ -119,8 +123,8 @@
                     <a class="round-corner shadow disabled" href="#" onclick="onSave()" title="Save to My-Memes">
                         Save
                     </a>
-                    <a class="round-corner shadow disabled" href="#" onclick="" title="to be implemented tommorow">
-                        Share
+                    <a class="round-corner cta-btn shadow" href="#" onclick="onClearLines()" title="to be implemented tommorow">
+                        Clear
                     </a>
                 </div>
             </div>
@@ -129,10 +133,10 @@
 
     </div>
 
-    <div class="image-gallery shadow hidden-up">
+    <div class="image-gallery main-content shadow hidden-up">
     </div>
 
-    <div class="memes-gallery shadow hidden-up">
+    <div class="memes-gallery main-content shadow hidden-up">
     </div>
 
     <script src="js/mango_DB.js"></script>

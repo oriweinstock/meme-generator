@@ -16,7 +16,7 @@ const BLINK_TIME = 400;
 function canvasInit() {
     console.log('Canvas module loaded')
     _addResizeListener();
-    _resizeCanvas();
+    _resizeCanvasProperties();
 }
 
 // MOUSE ......................................................................
@@ -25,15 +25,15 @@ function onCanvasMouseDown(ev) {
     clearInterval(gBlinkTimer);
     let mousePos = _getCorrectOffsets(ev);
 
-    let clickedLine = _getClickedLineByPos(mousePos);
-    if (clickedLine === -1) {
+    let clickedLineIdx = _getClickedLineByPos(mousePos);
+    if (clickedLineIdx === -1) {
         gIsNoneSelected = true;
         gMouseDown = false;
         renderCanvas();
         return;
     }
     gIsNoneSelected = false;
-    setCurrLineIdx(clickedLine);
+    setCurrLineIdx(clickedLineIdx);
 
     gDragOffsetX = _getDragOffsetX(mousePos.x);
     mousePos.x += gDragOffsetX;
@@ -157,7 +157,7 @@ function highLightCurrLine() {      //
 function renderSavedMemes(memes) {
     var strHtmls = memes.map((meme, index) => {
         return `<div class="saved-meme">
-                <canvas class="rounder-corner" onclick="onSavedMemeClick(${index})"
+                <canvas class="rounder-corner shadow" onclick="onSavedMemeClick(${index})"
                 id="saved-meme${index}" width="500" height="500">
                 </canvas>
                 </div>`
@@ -176,12 +176,11 @@ function renderSavedMemes(memes) {
 // UTILS ......................................................................
 function _addResizeListener() {
     addEventListener('resize', () => {
-        _resizeCanvas();
-        renderCanvas();
+         _resizeCanvasProperties();
     })
 }
 
-function _resizeCanvas() {
+function _resizeCanvasProperties() {
     let windowWidth = window.innerWidth;
     let canvasResize;
 
@@ -189,7 +188,7 @@ function _resizeCanvas() {
     if (windowWidth >= 1000) canvasResize = 500;
     else if (windowWidth > 720) canvasResize = windowWidth / 2;
     else if (windowWidth > 500) canvasResize = windowWidth / 1.2;
-    else canvasResize = windowWidth / 1.04;
+    else canvasResize = windowWidth / 1.02;
 
     gCanvas.style.width = canvasResize + 'px';
     gCanvas.style.height = canvasResize + 'px';

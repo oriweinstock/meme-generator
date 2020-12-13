@@ -55,28 +55,10 @@ const dbMemes = [
         "imgId": 15, "lines": [{ "txt": "2ND SPRINT | FINAL", "font": "impact", "pos": { "x": 16.53955283168756, "y": 74.15730337078652, "width": 367.9931640625, "height": 50 }, "size": 50, "strokeWidth": 2, "strokeColor": "#000000", "fillColor": "#FFFFFF" }, { "txt": "WATCH,", "font": "impact", "pos": { "x": 28.519350811485623, "y": 405.6179775280899, "width": 250.9248046875, "height": 82 }, "size": 82, "strokeWidth": 2, "strokeColor": "#000000", "fillColor": "yellow" }, { "txt": "and LEARN", "font": "impact", "pos": { "x": 163.52899784360466, "y": 475.28089887640454, "width": 254.599609375, "height": 62 }, "size": 62, "strokeWidth": 2, "strokeColor": "#000000", "fillColor": "#ff0000" }, { "txt": "💥", "pos": { "x": 416.8678924072183, "y": 79.77528089887642, "width": 60, "height": 60 }, "size": 60 }, { "txt": "💥", "pos": { "x": 400.13778231755765, "y": 92.13483146067416, "width": 36, "height": 36 }, "size": 36 }, { "txt": "💥", "pos": { "x": 421.2584269662921, "y": 102.24719101123597, "width": 44, "height": 44 }, "size": 44 }, { "txt": "🔥", "pos": { "x": 390.4494382022472, "y": 73.03370786516854, "width": 60, "height": 60 }, "size": 60 }, { "txt": "🔥", "pos": { "x": 425.2584269662921, "y": 79.86516853932585, "width": 36, "height": 36 }, "size": 36 }, { "txt": "💡", "pos": { "x": 425.7078651685394, "y": 467.4157303370787, "width": 48, "height": 48 }, "size": 48 }]
     },
     {
-        imgId: 13,
-        lines: [
-            {
-                txt: 'Till the end mate',
-                font: 'impact',
-                pos: { x: 30, y: 70, width: 310, height: 420 },
-                size: 50,
-                strokeWidth: 2,
-                strokeColor: '#000000',
-                fillColor: '#FFFFFF'
-            },
-            {
-                txt: 'cheers...',
-                font: 'impact',
-                pos: { x: 94, y: 410, width: 190, height: 490 },
-                size: 70,
-                strokeWidth: 2,
-                strokeColor: '#000000',
-                fillColor: 'yellow'
-            }
-        ]
-    },
+        "imgId": 13,
+        "lines": [
+            { "txt": "WELCOME TO", "font": "impact", "pos": { "x": 36.443298969072146, "y": 396.9072164948454, "width": 291.529296875, "height": 58 }, "size": 58, "strokeWidth": 2, "strokeColor": "#000000", "fillColor": "#ffffff" }, { "txt": "iMEME 2000", "font": "impact", "pos": { "x": 39.38144329896906, "y": 484.5360824742268, "width": 366.71484375, "height": 76 }, "size": 76, "strokeWidth": 3, "strokeColor": "#000000", "fillColor": "#ff0000" }, { "txt": "iMEME 2000", "font": "impact", "pos": { "x": 36.72164948453607, "y": 479.3814432989691, "width": 366.71484375, "height": 76 }, "size": 76, "strokeWidth": 3, "strokeColor": "#000000", "fillColor": "#ffe600" }, { "txt": "💥", "pos": { "x": 402.5154639175258, "y": 417.5257731958763, "width": 60, "height": 60 }, "size": 60 }, { "txt": "💥", "pos": { "x": 383.25773195876286, "y": 439.4329896907217, "width": 48, "height": 48 }, "size": 48 }, { "txt": "💥", "pos": { "x": 355.68041237113397, "y": 451.03092783505156, "width": 32, "height": 32 }, "size": 32 }, { "txt": "💥", "pos": { "x": 448.5463917525773, "y": 409.79381443298973, "width": 84, "height": 84 }, "size": 84 }]
+    }
 ];
 
 const dbImgs = [
@@ -155,12 +137,11 @@ const dbImgs = [
 ];
 
 const dbKeywords = [
-    { word: 'funny', count: 22 },
-    { word: 'cute', count: 18 },
-    { word: 'politics', count: 19 },
-    { word: 'dogs', count: 12 },
-    { word: 'baby', count: 26 },
-    { word: 'ALL'}
+    { 'funny' : 22 },
+    { 'cute' : 18 },
+    { 'politics' : 19 },
+    { 'dogs' : 12 },
+    { 'baby' : 26 },
 ];
 
 const dbEmojis = [

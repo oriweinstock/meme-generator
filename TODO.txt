@@ -98,3 +98,15 @@ V finalize desktop control box as well. decide on rows, buttons to remove, icons
 - fix mobile inputs to prevent still-possible zooming
 - add theme color and more dark/bright sections
 - fix selecting current meme doesn't load the 'saved one'...?
+
+Bonus 5th day:
+==============
+V mobile design
+- nav layout
+V main screen click on modals
+- mark a line on init (inline!?)
+- enlarge keyword on click
+- fix gallery margin
+- animate all movements
+- remove unused css lines
+- get rid of gIsNoneSelected

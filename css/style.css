@@ -1,5 +1,6 @@
 :root {
     --orange: rgb(236, 95, 1);
+    --header-height: 10vh;
 }
 
 * {
@@ -12,14 +13,64 @@ html {
 
 body {
     margin: 0;
-    background-color: lemonchiffon;
+    background-color: rgb(255, 251, 215);
     touch-action: manipulation;
     min-height: 100vh;
 }
 
+body.open-gallery .logo {
+    position: fixed;
+    left: -1000px;
+}
+
+body.open-gallery .main-screen,
+body.open-menu .main-screen,
+body.open-modal .main-screen,
+body.open-memes .main-screen {
+    z-index: 1;
+    opacity: 1;
+}
+
+body.open-gallery .main-nav,
+body.open-memes .main-nav,
+body.open-modal .main-nav {
+    z-index: -1;
+}
+
+body.open-gallery .btn-memes,
+body.open-gallery .btn-about {
+    pointer-events: none;
+    background-color: #aaa;
+}
+body.open-memes .btn-gallery,
+body.open-memes .btn-about {
+    pointer-events: none;
+    background-color: #aaa;
+}
+body.open-modal .btn-gallery,
+body.open-modal .btn-memes {
+    pointer-events: none;
+    background-color: #aaa;
+}
+
 header {
     background-color: var(--orange);
-    width: 100vw;
+}
+
+.top-nav {
+    margin: 0 auto;
+    height: var(--header-height);
+    padding: 10px;
+}
+
+.hamburger {
+    display: none;
+    background-color: var(--orange);
+    color: white;
+    position: fixed;
+    right: 20px;
+    font-weight: bold;
+    font-size: 2rem;
 }
 
 h1 {
@@ -30,6 +81,7 @@ h1 {
 }
 
 a {
+    text-transform: uppercase;
     background-color: #fff;
     padding: 5px 8px;
     margin-inline-end: 10px;
@@ -59,7 +111,10 @@ button, input, select {
     font-weight: bold;
     transition: background-color 0.2s;
 }
-
+.logo {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 2.5rem;
+}
 button:hover,
 select:hover {
     background-color: #edd;
@@ -69,26 +124,22 @@ label {
     font-size: 1rem;
     padding-top: 5px;
 }
+.main-screen {
+    z-index: -1;
+    opacity: 0;
+    position: absolute;
+    left: 0;
+    top: var(--header-height);
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+
+    transition: opacity 1s;
+}
 
 .main-content {
     max-width: 1000px;
     margin: 0 auto;
-}
-
-.top-nav {
-    margin: 0 auto;
-    height: 10vh;
-    padding: 10px;
-}
-
-.hamburger {
-    display: none;
-    background-color: var(--orange);
-    color: white;
-    position: fixed;
-    right: 20px;
-    font-weight: bold;
-    font-size: 2rem;
 }
 
 .keywords {
@@ -117,20 +168,14 @@ label {
 .meme-edit {
     margin: 20px auto;
 }
-
-.meme-image {
+.canvas-div,
+#meme-canvas {
     position: relative;
     width: 50vw;
     height: 50vw;
     max-width: 500px;
     max-height: 500px;
     touch-action: manipulation;
-}
-
-#meme-canvas {
-    position: absolute;
-    top: 0px;
-    left: 0px;
 }
 
 .meme-controls {
@@ -164,11 +209,6 @@ label {
 }
 .emoji:hover {
     transform: scale(1.2);
-}
-
-body.open-gallery .logo {
-    position: fixed;
-    left: -1000px;
 }
 
 /* FLOAT BAR */
@@ -209,6 +249,7 @@ body.open-gallery .logo {
 /* GALLERIES */
 .image-gallery,
 .memes-gallery {
+    z-index: 2;
     position: absolute;
     top: 90px;
     width: 90vw;
@@ -219,12 +260,14 @@ body.open-gallery .logo {
     align-items: center;
     padding: 20px;
     gap: 10px 10px;
-    grid-template-columns: repeat(auto-fill, minmax(100px, 200px));
+    grid-template-columns: repeat(auto-fill, 250px);
     transition: transform .7s;
 }
 .image-gallery img,
 .saved-meme {
-    height: 200px;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
     margin-inline-end: 0.5rem;
     transition: transform .5s;
 }
@@ -236,7 +279,17 @@ body.open-gallery .logo {
 }
 
 /* MODAL */
+.help {
+    color: #533;
+    font-weight: bold;
+    columns: 2;
+    margin: 0;
+    padding: 0;
+    font-size: 0.8rem;
+    line-height: 1.2rem;
+}
 .modal {
+    color: #433;
     position: fixed;
     z-index: 9;
     background-color: #fff;
@@ -260,7 +313,7 @@ body.open-gallery .logo {
 }
 .modal p::first-letter { 
     font-weight: bold;
-    font-size: 1.3rem;
+    font-size: 1.2rem;
 }
 small {
     margin-top: 20px;
@@ -367,12 +420,12 @@ select {
         flex-direction: column;
         width: 83.3333vw;
     }
-    .meme-image {
-        margin: 0px auto 10px auto;
+    .canvas-div,
+    #meme-canvas {
+        max-width: 83.3333vw;
+        max-height: 83.3333vw;
         width: 83.3333vw;
         height: 83.3333vw;
-        max-width: unset;
-        max-height: unset;
     }
     .meme-controls {
         width: 83.3333vw;
@@ -381,6 +434,21 @@ select {
 } 
 /* MOBILE */
 @media (max-width: 500px) {
+    /* header {
+        position: fixed;
+        top: 0px;
+        z-index: 2;
+    } */
+    .canvas-div,
+    #meme-canvas {
+        max-width: 98vw;
+        max-height: 98vw;
+        width: 98vw;
+        height: 98vw;
+    }
+    nav {
+        margin-bottom: 0;
+    }
     .main-nav {
         background-color: var(--orange);
         position: fixed;
@@ -404,23 +472,22 @@ select {
 
     .meme-edit {
         flex-direction: column;
-        width: 96.1538vw;
-    }
-    .meme-image {
-        margin: 0px auto 10px auto;
-        width: 96.1538vw;
-        height: 96.1538vw;
+        width: 98vw;
     }
     .meme-controls {
-        width: 96.1538vw;
+        width: 98vw;
         margin: 0 auto;
     }
 
     .image-gallery {
-        grid-template-columns: repeat(auto-fill, minmax(100px, 150px));
+        grid-template-columns: 1fr;
+        width: 100vw;
+        left: 0vw;
+        padding: 10px 0px;
     }
     .image-gallery img {
-        height: 150px;
+        width: 100vw;
+        height: 100vw;
     }
 
     .modal {
@@ -436,17 +503,7 @@ select {
     .top-nav {
         height: 70px;
     }
-
     .keywords {
-        background-color: var(--orange);
-        z-index: 2;
-        position: fixed;
-        left: 5vw;
-        width: 90vw;
-        top: 80px;
-        width: 90%;
-    }
-    .keywords a {
-        padding: 5px;
+        display: none;
     }
 }
